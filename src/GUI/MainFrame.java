@@ -62,18 +62,10 @@ public class MainFrame extends JFrame implements ActionListener {
         String button = e.getActionCommand();
 
         if (button.equals(testo_voci[0])){
-            FileFrame ff = new FileFrame(button);
-
-            ff.pack();
-            ff.setLocationRelativeTo(null);
-            ff.setVisible(true);
+            FileFrame ff = new FileFrame(button,true);
         }
         if (button.equals(testo_voci[1])){
-            FileFrame ff = new FileFrame(button);
-
-            ff.pack();
-            ff.setLocationRelativeTo(null);
-            ff.setVisible(true);
+            FileFrame ff = new FileFrame(button, false);
         }
         if (button.equals(testo_voci[2]) || button.equals(testo_voci[3]) || button.equals(testo_voci[4])){
 
