@@ -14,12 +14,9 @@ public class GestPanel extends JPanel implements ActionListener {
     public GestPanel() {
         super();
 
-        Voce [] v = new Voce[1];
-        v[0] = new Voce("12","saad","11");
-
         setLayout(new GridLayout(3,1));
 
-        MyTableModel modello = new MyTableModel(v);
+        MyTableModel modello = new MyTableModel();
         JScrollPane s = new JScrollPane(new JTable(modello));
 
         l = new JLabel("Totale: 0€");

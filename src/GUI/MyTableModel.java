@@ -2,17 +2,18 @@ package GUI;
 
 import Dati.Voce;
 
-import javax.swing.table.AbstractTableModel;;
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 
 public class MyTableModel extends AbstractTableModel {
-    private Voce[] v;
+    private ArrayList<Voce> v = new ArrayList<Voce>();
     private String [] nome_col = {"Data", "Descrizione", "Importo"};
 
     public MyTableModel(){
         this.v= null;
     }
 
-    public MyTableModel(Voce[] v) {
+    public MyTableModel(ArrayList <Voce> v) {
         this.v = v;
     }
 
@@ -25,15 +26,15 @@ public class MyTableModel extends AbstractTableModel {
     public int getRowCount(){
         if(v == null)
             return 0;
-        return v.length;
+        return v.size();
     }
 
     @Override
     public Object getValueAt(int row, int col){
         switch(col){
-            case 0: return v[row].getData();
-            case 1: return v[row].getDescrizione();
-            case 2: return v[row].getAmmontare();
+            case 0: return v.get(row).getData();
+            case 1: return v.get(row).getDescrizione();
+            case 2: return v.get(row).getAmmontare();
             default: return "";
         }
     }
