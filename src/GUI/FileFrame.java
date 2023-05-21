@@ -25,7 +25,20 @@ public class FileFrame implements ActionListener {
         chooser = new JFileChooser()
         {
             public void approveSelection(){
-                ;
+                File selectedFile = getSelectedFile();
+                if (selectedFile.exists() && getDialogType() == JFileChooser.SAVE_DIALOG)
+                {
+                    int result = JOptionPane.showConfirmDialog(this,
+                            "Do you want to overwrite?",
+                            "File already exists",
+                            JOptionPane.YES_NO_OPTION);
+                    if (result != JOptionPane.YES_OPTION)
+                    {
+                        cancelSelection();
+                        return;
+                    }
+                }
+                super.approveSelection();
             }
         };
 
@@ -37,14 +50,14 @@ public class FileFrame implements ActionListener {
             chooser.showOpenDialog(null);
 
         f = chooser.getSelectedFile();
-        operazione();
+        //operazione();
     }
 
     private void operazione(){
         if(salva){
             System.out.println("Salva "+f.getAbsolutePath());
 
-            if(f.exists()) {
+            if(f.exists() && !f.isDirectory()) {
                 conf = new JFrame("Conferma salvataggio");
                 JPanel p = new JPanel();
                 p.setLayout(new BorderLayout());
@@ -92,6 +105,7 @@ public class FileFrame implements ActionListener {
             chooser.approveSelection();
 
         //chiude la finestra
+        chooser.dispatchEvent(new WindowEvent(conf, WindowEvent.WINDOW_CLOSING));
         conf.dispatchEvent(new WindowEvent(conf, WindowEvent.WINDOW_CLOSING));
     }
 }
