@@ -63,9 +63,11 @@ public class MainFrame extends JFrame implements ActionListener {
 
         if (button.equals(testo_voci[0])){
             FileFrame ff = new FileFrame(button,true);
+            ff.operazione(gpanel.getBilancio());
         }
         if (button.equals(testo_voci[1])){
             FileFrame ff = new FileFrame(button, false);
+            ff.operazione(gpanel.getBilancio());
         }
         if (button.equals(testo_voci[2]) || button.equals(testo_voci[3]) || button.equals(testo_voci[4])){
 

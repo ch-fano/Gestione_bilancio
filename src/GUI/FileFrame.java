@@ -1,40 +1,38 @@
 package GUI;
 
+import Dati.Voce;
+
 import javax.swing.*;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
-public class FileFrame implements ActionListener {
+public class FileFrame {
 
     private boolean salva;
-    private JFrame conf;
     private File f;
 
-    private JFileChooser chooser;
 
     public FileFrame(String titolo, boolean salva) {
 
         this.salva = salva;
 
-        chooser = new JFileChooser()
+        JFileChooser chooser = new JFileChooser()
         {
             public void approveSelection(){
-                File selectedFile = getSelectedFile();
-                if (selectedFile.exists() && getDialogType() == JFileChooser.SAVE_DIALOG)
+                File selFile = getSelectedFile();
+                if (selFile.exists() && getDialogType() == JFileChooser.SAVE_DIALOG)
                 {
                     int result = JOptionPane.showConfirmDialog(this,
-                            "Do you want to overwrite?",
-                            "File already exists",
+                            selFile.getName() + " è già esistente.\nSostituire il file?",
+                            "Conferma salvataggio",
                             JOptionPane.YES_NO_OPTION);
+
                     if (result != JOptionPane.YES_OPTION)
                     {
-                        cancelSelection();
+                        //cancelSelection();
                         return;
                     }
                 }
@@ -45,67 +43,63 @@ public class FileFrame implements ActionListener {
         chooser.setDialogTitle(titolo);
 
         if(salva)
-            chooser.showDialog(null, "Salva");
+            chooser.showSaveDialog(null);
         else
             chooser.showOpenDialog(null);
 
         f = chooser.getSelectedFile();
-        //operazione();
     }
 
-    private void operazione(){
-        if(salva){
-            System.out.println("Salva "+f.getAbsolutePath());
+    //problema passaggio per riferimento ArrayList
+    public boolean operazione(ArrayList<Voce> v){
+        if(f!=null) {
+            if (salva) {
 
-            if(f.exists() && !f.isDirectory()) {
-                conf = new JFrame("Conferma salvataggio");
-                JPanel p = new JPanel();
-                p.setLayout(new BorderLayout());
+                FileOutputStream fout = null;
+                try {
+                    fout = new FileOutputStream(f.getAbsoluteFile());
+                } catch (FileNotFoundException e) {
+                    return false;
+                }
 
-                JPanel t1 = new JPanel();
-                t1.add(new JLabel(f.getName() + " è già esistente."));
+                ObjectOutputStream os = null;
 
-                JPanel t2 = new JPanel();
-                t2.add(new JLabel("Sostituire il file?"));
+                try {
+                    os = new ObjectOutputStream(fout);
+                    os.writeObject(v);
+                    os.flush();
+                    os.close();
+                } catch (IOException e) {
+                    return false;
+                }
 
-                JPanel b = new JPanel();
+            } else {
+                FileInputStream fin = null;
+                ObjectInputStream is = null;
+                try {
+                    fin = new FileInputStream(f.getAbsoluteFile());
+                    is = new ObjectInputStream(fin);
+                } catch (FileNotFoundException e) {
+                    return false;
+                } catch (IOException e) {
+                    return false;
+                }
 
-                JButton s = new JButton("Sì");
-                JButton n = new JButton("No");
 
-                s.addActionListener(this);
-                n.addActionListener(this);
-
-                b.add(s);
-                b.add(n);
-
-                p.add(t1, BorderLayout.NORTH);
-                p.add(t2, BorderLayout.CENTER);
-                p.add(b, BorderLayout.SOUTH);
-
-                conf.add(p);
-
-                conf.setLocationRelativeTo(null);
-                conf.pack();
-                conf.setVisible(true);
+                try {
+                    v = (ArrayList<Voce>) (is.readObject());
+                    is.close();
+                } catch (IOException e) {
+                    return false;
+                } catch (ClassNotFoundException e) {
+                    return false;
+                }
             }
         }
-        else
-        {
-            System.out.println("Carica "+f.getAbsolutePath());
-        }
+
+        return true;
     }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String scelta = e.getActionCommand();
 
-        if(scelta.equals("Sì"))
-            chooser.approveSelection();
-
-        //chiude la finestra
-        chooser.dispatchEvent(new WindowEvent(conf, WindowEvent.WINDOW_CLOSING));
-        conf.dispatchEvent(new WindowEvent(conf, WindowEvent.WINDOW_CLOSING));
-    }
 }

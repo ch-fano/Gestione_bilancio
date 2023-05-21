@@ -17,6 +17,14 @@ public class MyTableModel extends AbstractTableModel {
         this.v = v;
     }
 
+    public ArrayList<Voce> getV() {
+        return v;
+    }
+
+    public void setV(ArrayList<Voce> v) {
+        this.v = v;
+    }
+
     @Override
     public int getColumnCount(){
         return nome_col.length;

@@ -6,17 +6,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GestPanel extends JPanel implements ActionListener {
 
     protected JLabel l;     //probabilmente mi servirà protected perchè verrà modificata all'inserimento di una voce
+
+    private MyTableModel modello;
 
     public GestPanel() {
         super();
 
         setLayout(new GridLayout(3,1));
 
-        MyTableModel modello = new MyTableModel();
+        modello = new MyTableModel();
         JScrollPane s = new JScrollPane(new JTable(modello));
 
         l = new JLabel("Totale: 0€");
@@ -32,6 +35,14 @@ public class GestPanel extends JPanel implements ActionListener {
         p1.add(b);
 
         add(p1);
+    }
+
+    public ArrayList<Voce> getBilancio() {
+        return modello.getV();
+    }
+
+    public void setBilancio (ArrayList<Voce> v) {
+        modello.setV(v);
     }
 
     @Override
