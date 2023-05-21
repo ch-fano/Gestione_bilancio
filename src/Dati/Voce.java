@@ -1,13 +1,15 @@
 package Dati;
 
+import java.io.Serializable;
+
 /**
  * Questa classe gestisce i dati relativi ad una singola voce del bilancio
  * @autor Christofer Fanò
  */
-public class Voce {
+public class Voce implements Serializable {
     private String data;
     private String descrizione;
-    private String ammontare;
+    private float ammontare;
 
     /**
      * Costruttore della classe Voce
@@ -15,7 +17,7 @@ public class Voce {
      * @param descrizione
      * @param ammontare
      */
-    public Voce(String data, String descrizione, String ammontare) {
+    public Voce(String data, String descrizione, float ammontare) {
         this.data = data;
         this.descrizione = descrizione;
         this.ammontare = ammontare;
@@ -57,7 +59,7 @@ public class Voce {
      * Restituisce il valore dell'attributo ammontare
      * @return valore dell'attributo ammontare
      */
-    public String getAmmontare() {
+    public float getAmmontare() {
         return ammontare;
     }
 
@@ -65,7 +67,7 @@ public class Voce {
      * Permette di assegnare all'attributo ammontare il valore in input
      * @param ammontare
      */
-    public void setAmmontare(String ammontare) {
+    public void setAmmontare(float ammontare) {
         this.ammontare = ammontare;
     }
 }

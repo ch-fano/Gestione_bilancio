@@ -37,12 +37,8 @@ public class GestPanel extends JPanel implements ActionListener {
         add(p1);
     }
 
-    public ArrayList<Voce> getBilancio() {
-        return modello.getV();
-    }
-
-    public void setBilancio (ArrayList<Voce> v) {
-        modello.setV(v);
+    public MyTableModel getModel() {
+        return modello;
     }
 
     @Override

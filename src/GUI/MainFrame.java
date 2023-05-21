@@ -1,8 +1,13 @@
 package GUI;
 
+import Dati.Voce;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -13,6 +18,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
     public MainFrame(String titolo) {
         super(titolo);
+
+        ArrayList<Voce> v = new ArrayList<Voce>();
+        v.add(new Voce("08/05/02", "Compleanno", -100));
+        gpanel.getModel().setV(v);
 
         JMenuBar mb = new JMenuBar();
 
@@ -52,8 +61,19 @@ public class MainFrame extends JFrame implements ActionListener {
 
         setJMenuBar(mb);
 
-        add(gpanel);
-        gpanel.setVisible(true);
+        //add(gpanel);
+        //gpanel.setVisible(true);
+
+        JPanel prova = new JPanel();
+        JButton button = new JButton();
+        try {
+            Image img = ImageIO.read(getClass().getResource("/Pictures/stampa.png"));
+            button.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        prova.add(button);
+        add(prova);
         pack();
     }
 
@@ -63,11 +83,13 @@ public class MainFrame extends JFrame implements ActionListener {
 
         if (button.equals(testo_voci[0])){
             FileFrame ff = new FileFrame(button,true);
-            ff.operazione(gpanel.getBilancio());
+            if(!ff.operazione(gpanel.getModel()))
+                errorPane();
         }
         if (button.equals(testo_voci[1])){
             FileFrame ff = new FileFrame(button, false);
-            ff.operazione(gpanel.getBilancio());
+            if(!ff.operazione(gpanel.getModel()))
+                errorPane();
         }
         if (button.equals(testo_voci[2]) || button.equals(testo_voci[3]) || button.equals(testo_voci[4])){
 
@@ -75,5 +97,12 @@ public class MainFrame extends JFrame implements ActionListener {
         if (button.equals(testo_voci[5])){
 
         }
+    }
+
+    private void errorPane(){
+        JOptionPane.showMessageDialog(this,
+                "Operazione fallita",
+                "Errore",
+                JOptionPane.ERROR_MESSAGE);
     }
 }

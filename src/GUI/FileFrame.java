@@ -50,8 +50,7 @@ public class FileFrame {
         f = chooser.getSelectedFile();
     }
 
-    //problema passaggio per riferimento ArrayList
-    public boolean operazione(ArrayList<Voce> v){
+    public boolean operazione(MyTableModel m){
         if(f!=null) {
             if (salva) {
 
@@ -66,7 +65,7 @@ public class FileFrame {
 
                 try {
                     os = new ObjectOutputStream(fout);
-                    os.writeObject(v);
+                    os.writeObject(m.getV());
                     os.flush();
                     os.close();
                 } catch (IOException e) {
@@ -85,9 +84,8 @@ public class FileFrame {
                     return false;
                 }
 
-
                 try {
-                    v = (ArrayList<Voce>) (is.readObject());
+                    m.setV((ArrayList<Voce>) (is.readObject()));
                     is.close();
                 } catch (IOException e) {
                     return false;
