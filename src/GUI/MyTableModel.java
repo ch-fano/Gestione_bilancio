@@ -1,33 +1,42 @@
 package GUI;
 
-import Dati.Voce;
+import Data.Record;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
+/**
+ * Classe che gestisce la visualizzazione della tabella del bilancio
+ * @autor Christofer Fanò
+ */
+
 public class MyTableModel extends AbstractTableModel {
-    private ArrayList<Voce> v = new ArrayList<Voce>();
-    private String [] nome_col = {"Data", "Descrizione", "Importo"};
+    private ArrayList<Record> v = new ArrayList<Record>();
+    private String [] col_name = {"Data", "Descrizione", "Importo"};
 
     public MyTableModel(){
         this.v= null;
     }
 
-    public MyTableModel(ArrayList <Voce> v) {
+    public MyTableModel(ArrayList <Record> v) {
         this.v = v;
     }
 
-    public ArrayList<Voce> getV() {
+    public ArrayList<Record> getV() {
         return v;
     }
 
-    public void setV(ArrayList<Voce> v) {
+    public void setV(ArrayList<Record> v) {
         this.v = v;
     }
 
+    public void addRecord (Record el){ v.add(el); }
+
+    public void deleteRecord (int index){ v.remove(index);}
+
     @Override
     public int getColumnCount(){
-        return nome_col.length;
+        return col_name.length;
     }
 
     @Override
@@ -40,16 +49,16 @@ public class MyTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int col){
         switch(col){
-            case 0: return v.get(row).getData();
-            case 1: return v.get(row).getDescrizione();
-            case 2: return v.get(row).getAmmontare();
+            case 0: return v.get(row).getDate();
+            case 1: return v.get(row).getDescription();
+            case 2: return v.get(row).getAmount();
             default: return "";
         }
     }
 
     @Override
     public String getColumnName(int col){
-        return nome_col[col];
+        return col_name[col];
     }
 
     @Override

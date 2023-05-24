@@ -1,79 +1,60 @@
 package GUI;
 
-import Dati.Voce;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MainFrame extends JFrame implements ActionListener {
 
-    private JMenu salva, carica, esporta, stampa;
-    private String testo_menu[] = {"Salva bilancio","Carica bilancio", "Esporta bilancio","Stampa bilancio"};
-    private String testo_voci[] = {"Salva bilancio", "Carica bilancio", "Formato CSV", "Formato testo", "Formato Excel", "Inizia stampa"};
+    private JMenu file, export;
+    private String menu_text[] = {"File", "Esporta"};
+    private String item_text[] = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
     private GestPanel gpanel = new GestPanel();
 
     public MainFrame(String titolo) {
         super(titolo);
 
-        ArrayList<Voce> v = new ArrayList<Voce>();
-        v.add(new Voce("08/05/02", "Compleanno", -100));
-        gpanel.getModel().setV(v);
+        /*ArrayList<Record> v = new ArrayList<Record>();
+        v.add(new Record("08/05/02", "Compleanno", -100));
+        gpanel.getModel().setV(v);*/
 
         JMenuBar mb = new JMenuBar();
 
-        salva = new JMenu(testo_menu[0]);
-        carica = new JMenu(testo_menu[1]);
-        esporta = new JMenu(testo_menu[2]);
-        stampa = new JMenu(testo_menu[3]);
+        file = new JMenu(menu_text[0]);
+        export = new JMenu(menu_text[1]);
 
-        JMenuItem s = new JMenuItem(testo_voci[0]);
-        JMenuItem c = new JMenuItem(testo_voci[1]);
-        JMenuItem e1 = new JMenuItem(testo_voci[2]);
-        JMenuItem e2 = new JMenuItem(testo_voci[3]);
-        JMenuItem e3 = new JMenuItem(testo_voci[4]);
-        JMenuItem st = new JMenuItem(testo_voci[5]);
 
-        salva.add(s);
+        JMenuItem s = new JMenuItem(item_text[0]);
+        JMenuItem c = new JMenuItem(item_text[1]);
+        JMenuItem st = new JMenuItem(item_text[2]);
+        JMenuItem e1 = new JMenuItem(item_text[3]);
+        JMenuItem e2 = new JMenuItem(item_text[4]);
+        JMenuItem e3 = new JMenuItem(item_text[5]);
 
-        carica.add(c);
+        file.add(s);
+        file.add(c);
+        file.add(st);
 
-        esporta.add(e1);
-        esporta.add(e2);
-        esporta.add(e3);
+        export.add(e1);
+        export.add(e2);
+        export.add(e3);
 
-        stampa.add(st);
 
         s.addActionListener(this);
         c.addActionListener(this);
+        st.addActionListener(this);
         e1.addActionListener(this);
         e2.addActionListener(this);
         e3.addActionListener(this);
-        st.addActionListener(this);
 
-        mb.add(salva);
-        mb.add(carica);
-        mb.add(esporta);
-        mb.add(stampa);
+        mb.add(file);
+        mb.add(export);
 
         setJMenuBar(mb);
 
-        //add(gpanel);
-        //gpanel.setVisible(true);
+        add(gpanel);
+        gpanel.setVisible(true);
 
-        JPanel prova = new JPanel();
-        JButton button = new JButton();
-        try {
-            Image img = ImageIO.read(getClass().getResource("/Pictures/stampa.png"));
-            button.setIcon(new ImageIcon(img));
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        prova.add(button);
-        add(prova);
         pack();
     }
 
@@ -81,20 +62,22 @@ public class MainFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         String button = e.getActionCommand();
 
-        if (button.equals(testo_voci[0])){
-            FileFrame ff = new FileFrame(button,true);
-            if(!ff.operazione(gpanel.getModel()))
+        if (button.equals(item_text[0])){
+            FileFrame ff = new FileFrame(button, FileFrame.SAVE);
+            if(ff.operation(gpanel.getModel()))
                 errorPane();
         }
-        if (button.equals(testo_voci[1])){
-            FileFrame ff = new FileFrame(button, false);
-            if(!ff.operazione(gpanel.getModel()))
+        if (button.equals(item_text[1])){
+            FileFrame ff = new FileFrame(button, FileFrame.LOAD);
+            if(ff.operation(gpanel.getModel()))
                 errorPane();
+
+            gpanel.getModel().fireTableDataChanged();
         }
-        if (button.equals(testo_voci[2]) || button.equals(testo_voci[3]) || button.equals(testo_voci[4])){
+        if (button.equals(item_text[2])){
 
         }
-        if (button.equals(testo_voci[5])){
+        if (button.equals(item_text[3]) || button.equals(item_text[4]) || button.equals(item_text[5])){
 
         }
     }

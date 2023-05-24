@@ -1,6 +1,6 @@
 package GUI;
 
-import Dati.Voce;
+import Data.Record;
 
 import javax.swing.*;
 
@@ -9,59 +9,75 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
+/**
+ * Questa classe permette la selezione di un file per il salvataggio e il caricamento del bilancio
+ * @autor Christofer Fanò
+ */
 public class FileFrame {
-
-    private boolean salva;
+    public static final int SAVE = 0;
+    public static final int LOAD = 1;
+    private int type;
     private File f;
 
+    /**
+     * Costruttore della classe FileFrame. Permette di scegliere un file tra le cartelle del proprio dispositivo
+     * @param title titolo visualizzato sul JFileChooser
+     * @param type differenzia una finestra di salavataggio da una di caricamento, mantenendo il codice comune
+     */
+    public FileFrame(String title, int type) {
+        if(type == SAVE || type == LOAD) {
+            this.type = type;
 
-    public FileFrame(String titolo, boolean salva) {
+            JFileChooser chooser = new JFileChooser() {
+                public void approveSelection() {
+                    File selFile = getSelectedFile();
+                    if (selFile.exists() && getDialogType() == JFileChooser.SAVE_DIALOG) {
+                        int result = JOptionPane.showConfirmDialog(this,
+                                selFile.getName() + " è già esistente.\nSostituire il file?",
+                                "Conferma salvataggio",
+                                JOptionPane.YES_NO_OPTION);
 
-        this.salva = salva;
-
-        JFileChooser chooser = new JFileChooser()
-        {
-            public void approveSelection(){
-                File selFile = getSelectedFile();
-                if (selFile.exists() && getDialogType() == JFileChooser.SAVE_DIALOG)
-                {
-                    int result = JOptionPane.showConfirmDialog(this,
-                            selFile.getName() + " è già esistente.\nSostituire il file?",
-                            "Conferma salvataggio",
-                            JOptionPane.YES_NO_OPTION);
-
-                    if (result != JOptionPane.YES_OPTION)
-                    {
-                        //cancelSelection();
-                        return;
+                        if (result != JOptionPane.YES_OPTION)
+                            return;
                     }
+                    super.approveSelection();
                 }
-                super.approveSelection();
-            }
-        };
+            };
 
-        chooser.setDialogTitle(titolo);
+            chooser.setDialogTitle(title);
+            chooser.setCurrentDirectory(new File("./src/Download"));
 
-        if(salva)
-            chooser.showSaveDialog(null);
+            if (type ==SAVE)
+                chooser.showSaveDialog(null);
+            else
+                chooser.showOpenDialog(null);
+
+
+            f = chooser.getSelectedFile();
+
+        }
         else
-            chooser.showOpenDialog(null);
-
-        f = chooser.getSelectedFile();
+            System.err.println("FileFrame: type deve essere uno tra FileFrame.SAVE e FileFrame.LOAD");
     }
 
-    public boolean operazione(MyTableModel m){
+    /**
+     * Serializza o deserializza l'ArrayList del bilancio a seconda del parametro save, agendo sul file f
+     * @param m istanza della classe MyTableModel da cui poter estrarre e modificare l'ArrayList
+     * @return true nel caso qualche operazione fallisca, false se tutto è andato a buon fine o non è stato
+     * selezionato nessun file
+     */
+    public boolean operation(MyTableModel m){
         if(f!=null) {
-            if (salva) {
+            if (type == SAVE) {
 
-                FileOutputStream fout = null;
+                FileOutputStream fout;
                 try {
                     fout = new FileOutputStream(f.getAbsoluteFile());
                 } catch (FileNotFoundException e) {
-                    return false;
+                    return true;
                 }
 
-                ObjectOutputStream os = null;
+                ObjectOutputStream os;
 
                 try {
                     os = new ObjectOutputStream(fout);
@@ -69,33 +85,30 @@ public class FileFrame {
                     os.flush();
                     os.close();
                 } catch (IOException e) {
-                    return false;
+                    return true;
                 }
 
             } else {
-                FileInputStream fin = null;
-                ObjectInputStream is = null;
+                FileInputStream fin;
+                ObjectInputStream is;
+
                 try {
                     fin = new FileInputStream(f.getAbsoluteFile());
                     is = new ObjectInputStream(fin);
-                } catch (FileNotFoundException e) {
-                    return false;
                 } catch (IOException e) {
-                    return false;
+                    return true;
                 }
 
                 try {
-                    m.setV((ArrayList<Voce>) (is.readObject()));
+                    m.setV((ArrayList<Record>) (is.readObject()));
                     is.close();
-                } catch (IOException e) {
-                    return false;
-                } catch (ClassNotFoundException e) {
-                    return false;
+                } catch (IOException | ClassNotFoundException e) {
+                    return true;
                 }
             }
         }
 
-        return true;
+        return false;
     }
 
 

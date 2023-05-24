@@ -1,50 +1,67 @@
 package GUI;
 
-import Dati.Voce;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 
 public class GestPanel extends JPanel implements ActionListener {
 
-    protected JLabel l;     //probabilmente mi servirà protected perchè verrà modificata all'inserimento di una voce
-
-    private MyTableModel modello;
+    private MyTableModel model;
 
     public GestPanel() {
         super();
-
+        
         setLayout(new GridLayout(3,1));
 
-        modello = new MyTableModel();
-        JScrollPane s = new JScrollPane(new JTable(modello));
+        model = new MyTableModel();
+        JScrollPane s = new JScrollPane(new JTable(model));
 
-        l = new JLabel("Totale: 0€");
-
-        add(new JLabel("Scelta data da implementare"));
         add(s);
 
-        JPanel p1 = new JPanel();
-        JButton b = new JButton("Inserisci voce");
-        b.addActionListener(this);
+        JButton b_add = new JButton("Add");
+        b_add.addActionListener(this);
+        add(b_add);
 
-        p1.add(l);
-        p1.add(b);
-
-        add(p1);
     }
 
     public MyTableModel getModel() {
-        return modello;
+        return model;
     }
 
+
     @Override
-    public void actionPerformed(ActionEvent e){
-        JFrame prova = new JFrame("Prova");
-        prova.setLocationRelativeTo(null);
-        prova.setVisible(true);
+    public void actionPerformed(ActionEvent e) {
+        JPanel p = new JPanel();
+        setLayout(new SpringLayout());
+
+        JTextField t_date = new JTextField(10);
+        JLabel l_date = new JLabel("Data:");
+        l_date.setLabelFor(t_date);
+
+        JTextField t_desc = new JTextField(20);
+        JLabel l_desc = new JLabel("Descrizione:");
+        l_desc.setLabelFor(t_desc);
+
+        JTextField t_amount = new JTextField(10);
+        JLabel l_amount = new JLabel("Importo:");
+        l_amount.setLabelFor(t_amount);
+
+        p.add(l_date);
+        p.add(t_date);
+
+        p.add(l_desc);
+        p.add(t_desc);
+
+        p.add(l_amount);
+        p.add(t_amount);
+
+
+
+        JOptionPane.showMessageDialog(this, p,
+                "Inserisci voce",
+                JOptionPane.PLAIN_MESSAGE);
+
     }
 }
