@@ -1,13 +1,14 @@
 package Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Questa classe gestisce i dati relativi ad una singola voce del bilancio
  * @autor Christofer Fanò
  */
 public class Record implements Serializable {
-    private String date;
+    private LocalDate date;
     private String description;
     private float amount;
 
@@ -18,7 +19,7 @@ public class Record implements Serializable {
      * @param description descrizione della transazione
      * @param amount importo della transazione
      */
-    public Record(String date, String description, float amount) {
+    public Record(LocalDate date, String description, float amount) {
         this.date = date;
         this.description = description;
         this.amount = amount;
@@ -28,7 +29,7 @@ public class Record implements Serializable {
      * Restituisce il valore dell'attributo data
      * @return valore dell'attributo data
      */
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -36,7 +37,7 @@ public class Record implements Serializable {
      * Permette di assegnare all'attributo data il valore in input
      * @param date data da assegnare alla voce
      */
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

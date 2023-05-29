@@ -71,8 +71,6 @@ public class MainFrame extends JFrame implements ActionListener {
             FileFrame ff = new FileFrame(button, FileFrame.LOAD);
             if(ff.operation(gpanel.getModel()))
                 errorPane();
-
-            gpanel.getModel().fireTableDataChanged();
         }
         if (button.equals(item_text[2])){
 

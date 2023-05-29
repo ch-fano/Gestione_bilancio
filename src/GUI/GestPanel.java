@@ -1,12 +1,17 @@
 package GUI;
 
+import Listeners.AddListener;
+import org.jdatepicker.impl.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Properties;
 
 
-public class GestPanel extends JPanel implements ActionListener {
+public class GestPanel extends JPanel {
 
     private MyTableModel model;
 
@@ -21,7 +26,8 @@ public class GestPanel extends JPanel implements ActionListener {
         add(s);
 
         JButton b_add = new JButton("Add");
-        b_add.addActionListener(this);
+        JButton b_del = new JButton("Delete");
+        b_add.addActionListener(new AddListener(model));
         add(b_add);
 
     }
@@ -30,38 +36,4 @@ public class GestPanel extends JPanel implements ActionListener {
         return model;
     }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JPanel p = new JPanel();
-        setLayout(new SpringLayout());
-
-        JTextField t_date = new JTextField(10);
-        JLabel l_date = new JLabel("Data:");
-        l_date.setLabelFor(t_date);
-
-        JTextField t_desc = new JTextField(20);
-        JLabel l_desc = new JLabel("Descrizione:");
-        l_desc.setLabelFor(t_desc);
-
-        JTextField t_amount = new JTextField(10);
-        JLabel l_amount = new JLabel("Importo:");
-        l_amount.setLabelFor(t_amount);
-
-        p.add(l_date);
-        p.add(t_date);
-
-        p.add(l_desc);
-        p.add(t_desc);
-
-        p.add(l_amount);
-        p.add(t_amount);
-
-
-
-        JOptionPane.showMessageDialog(this, p,
-                "Inserisci voce",
-                JOptionPane.PLAIN_MESSAGE);
-
-    }
 }

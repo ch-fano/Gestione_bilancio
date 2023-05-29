@@ -45,7 +45,7 @@ public class FileFrame {
             };
 
             chooser.setDialogTitle(title);
-            chooser.setCurrentDirectory(new File("./src/Download"));
+            chooser.setCurrentDirectory(new File("./src/Download_balance"));
 
             if (type ==SAVE)
                 chooser.showSaveDialog(null);

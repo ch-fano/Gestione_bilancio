@@ -13,14 +13,9 @@ import java.util.ArrayList;
 public class MyTableModel extends AbstractTableModel {
     private ArrayList<Record> v = new ArrayList<Record>();
     private String [] col_name = {"Data", "Descrizione", "Importo"};
+    public MyTableModel(ArrayList <Record> v) { this.v = v; }
 
-    public MyTableModel(){
-        this.v= null;
-    }
-
-    public MyTableModel(ArrayList <Record> v) {
-        this.v = v;
-    }
+    public MyTableModel(){ v = new ArrayList<Record>(); }
 
     public ArrayList<Record> getV() {
         return v;
@@ -28,9 +23,13 @@ public class MyTableModel extends AbstractTableModel {
 
     public void setV(ArrayList<Record> v) {
         this.v = v;
+        fireTableDataChanged();
     }
 
-    public void addRecord (Record el){ v.add(el); }
+    public void addRecord (Record el){
+        v.add(el);
+        fireTableDataChanged();
+    }
 
     public void deleteRecord (int index){ v.remove(index);}
 
