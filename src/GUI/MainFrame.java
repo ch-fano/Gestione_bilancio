@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame implements ActionListener {
-
     private JMenu file, export;
     private String menu_text[] = {"File", "Esporta"};
     private String item_text[] = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
@@ -13,10 +12,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
     public MainFrame(String titolo) {
         super(titolo);
-
-        /*ArrayList<Record> v = new ArrayList<Record>();
-        v.add(new Record("08/05/02", "Compleanno", -100));
-        gpanel.getModel().setV(v);*/
 
         JMenuBar mb = new JMenuBar();
 

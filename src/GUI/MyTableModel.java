@@ -31,7 +31,15 @@ public class MyTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public void deleteRecord (int index){ v.remove(index);}
+    public void deleteRecord (int index){
+        v.remove(index);
+        fireTableDataChanged();
+    }
+
+    public void modifyRecord (int index, Record el){
+        v.set(index, el);
+        fireTableDataChanged();
+    }
 
     @Override
     public int getColumnCount(){
