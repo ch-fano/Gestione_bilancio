@@ -1,5 +1,7 @@
-package GUI;
+package Frames;
 
+import Data.DateFormatter;
+import Data.MyTableModel;
 import Data.Record;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -10,19 +12,22 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
 public class InsertFrame extends JFrame implements DocumentListener {
-    private JTextField t_amount, t_desc;
-    private JButton ok = new JButton("Ok");
-    private JDatePickerImpl datePicker;
+    private final JTextField t_amount, t_desc;
+    private final JButton ok = new JButton("Ok");
+    private final JDatePickerImpl datePicker;
 
     public InsertFrame(String title, MyTableModel model){
-        this(title, model, -2);
+        this(title, model, -1);
     }
+
     public InsertFrame(String title, MyTableModel model, int row){
         super(title);
 
@@ -30,18 +35,22 @@ public class InsertFrame extends JFrame implements DocumentListener {
 
         JPanel p1 = new JPanel(new GridLayout(3,3));
 
-        t_desc = new JTextField(20);
+        UtilDateModel dateModel = new UtilDateModel();
+        t_desc = new JTextField(10);
         t_amount = new JTextField(10);
 
-        Properties prop = new Properties();
-        prop.put("text.today", "Today");
-        prop.put("text.month", "Month");
-        prop.put("text.year", "Year");
+        if(row!=-1) {
+            //visualizzo i valori relativi alla riga
 
-        UtilDateModel dateModel = new UtilDateModel();
+            //visualizzo LocalDate come stringa e poi converto la stringa in Date
+            try {
+                dateModel.setValue(new SimpleDateFormat("dd-MM-yyyy").parse((String) model.getValueAt(row, 0)));
+            }catch(ParseException e){
+                System.err.println("InsertFrame: errore nella conversione da String a Date");
+            }
 
-        if(row!=-2) {
-            dateModel.setValue(java.sql.Date.valueOf((LocalDate) model.getValueAt(row,0)));
+            //dateModel.setValue(java.sql.Date.valueOf((LocalDate) model.getValueAt(row,0)));
+
             t_desc.setText((String) model.getValueAt(row,1));
             t_amount.setText(""+model.getValueAt(row,2));
 
@@ -51,13 +60,20 @@ public class InsertFrame extends JFrame implements DocumentListener {
             dateModel.setValue(java.sql.Date.valueOf(LocalDate.now()));
 
         dateModel.setSelected(true);
+
+        Properties prop = new Properties();
+        prop.put("text.today", "Today");
+        prop.put("text.month", "Month");
+        prop.put("text.year", "Year");
         JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, prop);
         datePicker = new JDatePickerImpl(datePanel, new DateFormatter());
+        datePicker.setShowYearButtons(true);
 
         datePicker.addActionListener(e -> {
-            ok.setEnabled(true);
             if(datePicker.getModel().getValue()==null)
                 ok.setEnabled(false);
+            else
+                enableButton();
         });
 
         t_desc.getDocument().addDocumentListener(this);
@@ -68,11 +84,11 @@ public class InsertFrame extends JFrame implements DocumentListener {
             float amount = Float.parseFloat(t_amount.getText());
             Record r = new Record(date, desc , amount);
 
-            if(row==-2)
+            if(row==-1)
                 model.addRecord(r);
-            else {
+            else
                 model.modifyRecord(row, r);
-            }
+
             dispose();
         });
 
@@ -100,27 +116,28 @@ public class InsertFrame extends JFrame implements DocumentListener {
         setVisible(true);
     }
 
-
-    @Override
-    public void insertUpdate(DocumentEvent e) {
+    private void enableButton(){
         ok.setEnabled(true);
 
         if(t_desc.getText().equals("") || t_amount.getText().equals(""))
             ok.setEnabled(false);
-
-        if (e.getDocument()== t_amount.getDocument()){
-            try{
+        else {
+            try {
                 Float.parseFloat(t_amount.getText());
-            }
-            catch(NumberFormatException ex){
+            } catch (NumberFormatException ex) {
                 ok.setEnabled(false);
             }
         }
     }
 
     @Override
+    public void insertUpdate(DocumentEvent e) {
+        enableButton();
+    }
+
+    @Override
     public void removeUpdate(DocumentEvent e) {
-        insertUpdate(e);
+        enableButton();
     }
 
     @Override

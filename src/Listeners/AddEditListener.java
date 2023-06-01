@@ -1,7 +1,7 @@
 package Listeners;
 
-import GUI.InsertFrame;
-import GUI.MyTableModel;
+import Frames.InsertFrame;
+import Data.MyTableModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +11,7 @@ public class AddEditListener implements ActionListener {
     private int row;
 
 
-    public AddEditListener(MyTableModel model) { this(model, -2); }
+    public AddEditListener(MyTableModel model) { this(model, -1); }
     public AddEditListener(MyTableModel model, int row) {
         this.model = model;
         this.row = row;
@@ -20,9 +20,11 @@ public class AddEditListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         InsertFrame f;
-        if(row==-2)
+        if(row==-1)
             f = new InsertFrame("Inserisci voce", model);
         else
             f = new InsertFrame("Modifica voce", model, row);
+
+        f.setLocationRelativeTo(null);
     }
 }

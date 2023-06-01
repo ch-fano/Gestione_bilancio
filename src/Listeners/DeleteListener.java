@@ -1,13 +1,13 @@
 package Listeners;
 
-import GUI.MyTableModel;
+import Data.MyTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DeleteListener implements ActionListener {
-    private JTable table;
+    private final JTable table;
     
     public DeleteListener(JTable table) { this.table = table; }
     @Override

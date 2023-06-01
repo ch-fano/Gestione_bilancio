@@ -1,8 +1,9 @@
-package GUI;
+package Data;
 
 import Data.Record;
 
 import javax.swing.table.AbstractTableModel;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -11,11 +12,10 @@ import java.util.ArrayList;
  */
 
 public class MyTableModel extends AbstractTableModel {
-    private ArrayList<Record> v = new ArrayList<Record>();
-    private String [] col_name = {"Data", "Descrizione", "Importo"};
+    private ArrayList<Record> v;
+    private final String [] col_name = {"Data", "Descrizione", "Importo"};
     public MyTableModel(ArrayList <Record> v) { this.v = v; }
-
-    public MyTableModel(){ v = new ArrayList<Record>(); }
+    public MyTableModel(){ v = new ArrayList<>(); }
 
     public ArrayList<Record> getV() {
         return v;
@@ -27,6 +27,7 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public void addRecord (Record el){
+
         v.add(el);
         fireTableDataChanged();
     }
@@ -55,12 +56,12 @@ public class MyTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int row, int col){
-        switch(col){
-            case 0: return v.get(row).getDate();
-            case 1: return v.get(row).getDescription();
-            case 2: return v.get(row).getAmount();
-            default: return "";
-        }
+        return switch (col) {
+            case 0 -> v.get(row).getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            case 1 -> v.get(row).getDescription();
+            case 2 -> v.get(row).getAmount();
+            default -> "";
+        };
     }
 
     @Override
@@ -72,4 +73,5 @@ public class MyTableModel extends AbstractTableModel {
     public Class getColumnClass(int col){
         return getValueAt(0, col).getClass();
     }
+
 }

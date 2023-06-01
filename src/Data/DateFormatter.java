@@ -1,4 +1,4 @@
-package GUI;
+package Data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

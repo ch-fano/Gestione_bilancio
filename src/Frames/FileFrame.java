@@ -1,5 +1,6 @@
-package GUI;
+package Frames;
 
+import Data.MyTableModel;
 import Data.Record;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Questa classe permette la selezione di un file per il salvataggio e il caricamento del bilancio
@@ -16,6 +18,7 @@ import javax.swing.JFileChooser;
 public class FileFrame {
     public static final int SAVE = 0;
     public static final int LOAD = 1;
+    private boolean do_operation = false;
     private int type;
     private File f;
 
@@ -31,13 +34,17 @@ public class FileFrame {
             JFileChooser chooser = new JFileChooser() {
                 public void approveSelection() {
                     File selFile = getSelectedFile();
+                    do_operation = true;
                     if (selFile.exists() && getDialogType() == JFileChooser.SAVE_DIALOG) {
+                        do_operation = false;
                         int result = JOptionPane.showConfirmDialog(this,
                                 selFile.getName() + " è già esistente.\nSostituire il file?",
                                 "Conferma salvataggio",
                                 JOptionPane.YES_NO_OPTION);
 
-                        if (result != JOptionPane.YES_OPTION)
+                        if (result == JOptionPane.YES_OPTION)
+                            do_operation = true;
+                        else
                             return;
                     }
                     super.approveSelection();
@@ -47,11 +54,13 @@ public class FileFrame {
             chooser.setDialogTitle(title);
             chooser.setCurrentDirectory(new File("./src/Download_balance"));
 
+            chooser.addChoosableFileFilter(new FileNameExtensionFilter("File SER ","ser"));
+            chooser.setAcceptAllFileFilterUsed(false);
+
             if (type ==SAVE)
                 chooser.showSaveDialog(null);
             else
                 chooser.showOpenDialog(null);
-
 
             f = chooser.getSelectedFile();
 
@@ -67,12 +76,15 @@ public class FileFrame {
      * selezionato nessun file
      */
     public boolean operation(MyTableModel m){
-        if(f!=null) {
+        if(do_operation) {
             if (type == SAVE) {
 
                 FileOutputStream fout;
                 try {
-                    fout = new FileOutputStream(f.getAbsoluteFile());
+                    if(f.exists())
+                        fout = new FileOutputStream(f.getAbsoluteFile());
+                    else
+                        fout = new FileOutputStream(f.getAbsoluteFile()+".ser");
                 } catch (FileNotFoundException e) {
                     return true;
                 }
@@ -106,6 +118,8 @@ public class FileFrame {
                     return true;
                 }
             }
+
+            do_operation = false;
         }
 
         return false;

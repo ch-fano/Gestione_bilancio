@@ -1,22 +1,23 @@
-package GUI;
+package Frames;
+
+import Panels.TablePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainFrame extends JFrame implements ActionListener {
-    private JMenu file, export;
-    private String menu_text[] = {"File", "Esporta"};
-    private String item_text[] = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
-    private GestPanel gpanel = new GestPanel();
+public class MenuFrame extends JFrame implements ActionListener {
+    private final String[] menu_text = {"File", "Esporta"};
+    private final String[] item_text = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
+    private final TablePanel apanel = new TablePanel();
 
-    public MainFrame(String titolo) {
+    public MenuFrame(String titolo) {
         super(titolo);
 
         JMenuBar mb = new JMenuBar();
 
-        file = new JMenu(menu_text[0]);
-        export = new JMenu(menu_text[1]);
+        JMenu file = new JMenu(menu_text[0]);
+        JMenu export = new JMenu(menu_text[1]);
 
 
         JMenuItem s = new JMenuItem(item_text[0]);
@@ -47,8 +48,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
         setJMenuBar(mb);
 
-        add(gpanel);
-        gpanel.setVisible(true);
+        add(apanel);
+        apanel.setVisible(true);
 
         pack();
     }
@@ -59,12 +60,12 @@ public class MainFrame extends JFrame implements ActionListener {
 
         if (button.equals(item_text[0])){
             FileFrame ff = new FileFrame(button, FileFrame.SAVE);
-            if(ff.operation(gpanel.getModel()))
+            if(ff.operation(apanel.getModel()))
                 errorPane();
         }
         if (button.equals(item_text[1])){
             FileFrame ff = new FileFrame(button, FileFrame.LOAD);
-            if(ff.operation(gpanel.getModel()))
+            if(ff.operation(apanel.getModel()))
                 errorPane();
         }
         if (button.equals(item_text[2])){

@@ -1,7 +1,7 @@
 package main;
 
 import javax.swing.*;
-import GUI.MainFrame;
+import Frames.MenuFrame;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class Main {
     }
 
     public Main() {
-            MainFrame f = new MainFrame("Gestione bilancio");
+            MenuFrame f = new MenuFrame("Gestione bilancio");
 
 
             f.pack();
