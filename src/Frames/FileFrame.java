@@ -2,6 +2,7 @@ package Frames;
 
 import Data.MyTableModel;
 import Data.Record;
+import Panels.ButtonPanel;
 
 import javax.swing.*;
 
@@ -20,6 +21,7 @@ public class FileFrame {
     public static final int LOAD = 1;
     private boolean do_operation = false;
     private int type;
+    private ButtonPanel bp;
     private File f;
 
     /**
@@ -27,9 +29,10 @@ public class FileFrame {
      * @param title titolo visualizzato sul JFileChooser
      * @param type differenzia una finestra di salavataggio da una di caricamento, mantenendo il codice comune
      */
-    public FileFrame(String title, int type) {
+    public FileFrame(String title, int type, ButtonPanel bp) {
         if(type == SAVE || type == LOAD) {
             this.type = type;
+            this.bp = bp;
 
             JFileChooser chooser = new JFileChooser() {
                 public void approveSelection() {
@@ -117,6 +120,8 @@ public class FileFrame {
                 } catch (IOException | ClassNotFoundException e) {
                     return true;
                 }
+
+                bp.calculateTotal();
             }
 
             do_operation = false;

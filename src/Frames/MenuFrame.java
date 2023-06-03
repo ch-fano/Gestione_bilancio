@@ -1,6 +1,6 @@
 package Frames;
 
-import Panels.TablePanel;
+import Panels.MainPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class MenuFrame extends JFrame implements ActionListener {
     private final String[] menu_text = {"File", "Esporta"};
     private final String[] item_text = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
-    private final TablePanel apanel = new TablePanel();
+    private final MainPanel main_panel = new MainPanel();
 
     public MenuFrame(String titolo) {
         super(titolo);
@@ -48,8 +48,8 @@ public class MenuFrame extends JFrame implements ActionListener {
 
         setJMenuBar(mb);
 
-        add(apanel);
-        apanel.setVisible(true);
+        add(main_panel);
+        main_panel.setVisible(true);
 
         pack();
     }
@@ -59,13 +59,13 @@ public class MenuFrame extends JFrame implements ActionListener {
         String button = e.getActionCommand();
 
         if (button.equals(item_text[0])){
-            FileFrame ff = new FileFrame(button, FileFrame.SAVE);
-            if(ff.operation(apanel.getModel()))
+            FileFrame ff = new FileFrame(button, FileFrame.SAVE, main_panel.getButtonPanel());
+            if(ff.operation(main_panel.getModel()))
                 errorPane();
         }
         if (button.equals(item_text[1])){
-            FileFrame ff = new FileFrame(button, FileFrame.LOAD);
-            if(ff.operation(apanel.getModel()))
+            FileFrame ff = new FileFrame(button, FileFrame.LOAD, main_panel.getButtonPanel());
+            if(ff.operation(main_panel.getModel()))
                 errorPane();
         }
         if (button.equals(item_text[2])){

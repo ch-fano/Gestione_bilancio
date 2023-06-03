@@ -3,6 +3,7 @@ package Frames;
 import Data.DateFormatter;
 import Data.MyTableModel;
 import Data.Record;
+import Panels.ButtonPanel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -24,11 +25,11 @@ public class InsertFrame extends JFrame implements DocumentListener {
     private final JButton ok = new JButton("Ok");
     private final JDatePickerImpl datePicker;
 
-    public InsertFrame(String title, MyTableModel model){
-        this(title, model, -1);
+    public InsertFrame(String title, MyTableModel model, ButtonPanel bp){
+        this(title, model, bp, -1);
     }
 
-    public InsertFrame(String title, MyTableModel model, int row){
+    public InsertFrame(String title, MyTableModel model, ButtonPanel bp, int row){
         super(title);
 
         ok.setEnabled(false);
@@ -43,13 +44,12 @@ public class InsertFrame extends JFrame implements DocumentListener {
             //visualizzo i valori relativi alla riga
 
             //visualizzo LocalDate come stringa e poi converto la stringa in Date
+            //dateModel.setValue(java.sql.Date.valueOf((LocalDate) model.getValueAt(row,0)));
             try {
                 dateModel.setValue(new SimpleDateFormat("dd-MM-yyyy").parse((String) model.getValueAt(row, 0)));
             }catch(ParseException e){
                 System.err.println("InsertFrame: errore nella conversione da String a Date");
             }
-
-            //dateModel.setValue(java.sql.Date.valueOf((LocalDate) model.getValueAt(row,0)));
 
             t_desc.setText((String) model.getValueAt(row,1));
             t_amount.setText(""+model.getValueAt(row,2));
@@ -88,6 +88,8 @@ public class InsertFrame extends JFrame implements DocumentListener {
                 model.addRecord(r);
             else
                 model.modifyRecord(row, r);
+
+            bp.calculateTotal();
 
             dispose();
         });

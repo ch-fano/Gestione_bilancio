@@ -1,6 +1,6 @@
 package Listeners;
 
-import Data.MyTableModel;
+import Panels.ButtonPanel;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -9,8 +9,11 @@ import java.awt.event.MouseEvent;
 public class TableMouseAdapter extends MouseAdapter {
 
     private final JTable table;
-    public TableMouseAdapter(JTable table) {
+    private final ButtonPanel bp;
+
+    public TableMouseAdapter(JTable table, ButtonPanel bp) {
         this.table = table;
+        this.bp = bp;
     }
 
     @Override
@@ -22,12 +25,12 @@ public class TableMouseAdapter extends MouseAdapter {
             table.clearSelection();
         }
 
-        int rowindex = table.getSelectedRow();
+        int rowindex = table.convertRowIndexToModel(table.getSelectedRow());
         if (rowindex > 0 && e.isPopupTrigger() && e.getComponent() instanceof JTable) {
             JPopupMenu popup = new JPopupMenu();
             JMenuItem edit = new JMenuItem("Edit");
 
-            edit.addActionListener(new AddEditListener( (MyTableModel)table.getModel(), rowindex));
+            edit.addActionListener(new ModifyTableListener(table, bp));
             popup.add(edit);
             popup.show(e.getComponent(), e.getX(), e.getY());
         }
