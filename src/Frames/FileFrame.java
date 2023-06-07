@@ -1,13 +1,12 @@
 package Frames;
 
 import Data.MyTableModel;
-import Data.Record;
+import Export.*;
 import Panels.ButtonPanel;
 
 import javax.swing.*;
 
 import java.io.*;
-import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -23,6 +22,9 @@ public class FileFrame {
     private int type;
     private ButtonPanel bp;
     private File f;
+    private final String[] file_desc = {"File SER", "File CSV", "File TXT", "File XLSX"};
+    private final String[] file_ext = {"ser", "csv", "txt", "xlsx"};
+    private JFileChooser chooser = null;
 
     /**
      * Costruttore della classe FileFrame. Permette di scegliere un file tra le cartelle del proprio dispositivo
@@ -34,7 +36,7 @@ public class FileFrame {
             this.type = type;
             this.bp = bp;
 
-            JFileChooser chooser = new JFileChooser() {
+            chooser = new JFileChooser() {
                 public void approveSelection() {
                     File selFile = getSelectedFile();
                     do_operation = true;
@@ -57,7 +59,8 @@ public class FileFrame {
             chooser.setDialogTitle(title);
             chooser.setCurrentDirectory(new File("./src/Download_balance"));
 
-            chooser.addChoosableFileFilter(new FileNameExtensionFilter("File SER ","ser"));
+            for(int i=0; i<4; i++)
+                chooser.addChoosableFileFilter(new FileNameExtensionFilter(file_desc[i],file_ext[i]));
             chooser.setAcceptAllFileFilterUsed(false);
 
             if (type ==SAVE)
@@ -74,57 +77,60 @@ public class FileFrame {
 
     /**
      * Serializza o deserializza l'ArrayList del bilancio a seconda del parametro save, agendo sul file f
-     * @param m istanza della classe MyTableModel da cui poter estrarre e modificare l'ArrayList
+     * @param table istanza della classe JTable da cui poter estrarre il modello
      * @return true nel caso qualche operazione fallisca, false se tutto è andato a buon fine o non è stato
      * selezionato nessun file
      */
-    public boolean operation(MyTableModel m){
+    public boolean operation(JTable table){
+        MyTableModel m = (MyTableModel) table.getModel();
+
         if(do_operation) {
-            if (type == SAVE) {
+            String description = chooser.getFileFilter().getDescription();
 
-                FileOutputStream fout;
-                try {
-                    if(f.exists())
-                        fout = new FileOutputStream(f.getAbsoluteFile());
-                    else
-                        fout = new FileOutputStream(f.getAbsoluteFile()+".ser");
-                } catch (FileNotFoundException e) {
-                    return true;
-                }
+            boolean result;
+            IOFileFormatter fileFormatter = null;
 
-                ObjectOutputStream os;
+            if(description.equals(file_desc[0])) {
+                if (f.exists())
+                    fileFormatter = new SER_IOFileFormatter(f.getPath(), m);
+                else
+                    fileFormatter = new SER_IOFileFormatter(f.getPath()+"."+file_ext[0], m);
+            }
 
-                try {
-                    os = new ObjectOutputStream(fout);
-                    os.writeObject(m.getV());
-                    os.flush();
-                    os.close();
-                } catch (IOException e) {
-                    return true;
-                }
+            if(description.equals(file_desc[1])) {
+                if (f.exists())
+                    fileFormatter = new CSV_IOFileFormatter(f.getPath(), m);
+                else
+                    fileFormatter = new CSV_IOFileFormatter(f.getPath()+"."+file_ext[1], m);
+            }
 
-            } else {
-                FileInputStream fin;
-                ObjectInputStream is;
+            if(description.equals(file_desc[2])) {
+                if (f.exists())
+                    fileFormatter = new TXT_IOFileFormatter(f.getPath(), m);
+                else
+                    fileFormatter = new TXT_IOFileFormatter(f.getPath()+"."+file_ext[2], m);
+            }
 
-                try {
-                    fin = new FileInputStream(f.getAbsoluteFile());
-                    is = new ObjectInputStream(fin);
-                } catch (IOException e) {
-                    return true;
-                }
+            if(description.equals(file_desc[3])) {
+                if (f.exists())
+                    fileFormatter = new XLSX_IOFileFormatter(f.getPath(), m, table);
+                else
+                    fileFormatter = new XLSX_IOFileFormatter(f.getPath()+"."+file_ext[3], m, table);
+            }
 
-                try {
-                    m.setV((ArrayList<Record>) (is.readObject()));
-                    is.close();
-                } catch (IOException | ClassNotFoundException e) {
-                    return true;
-                }
 
+            if (type == SAVE)
+
+                result = fileFormatter.exportFile();
+
+            else{
+
+                result = fileFormatter.importFile();
                 bp.calculateTotal();
             }
 
             do_operation = false;
+            return result;
         }
 
         return false;

@@ -1,5 +1,8 @@
 package Frames;
 
+import Export.CSV_IOFileFormatter;
+import Export.IOFileFormatter;
+import Export.TXT_IOFileFormatter;
 import Panels.MainPanel;
 
 import javax.swing.*;
@@ -7,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuFrame extends JFrame implements ActionListener {
-    private final String[] menu_text = {"File", "Esporta"};
     private final String[] item_text = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
     private final MainPanel main_panel = new MainPanel();
 
@@ -16,6 +18,7 @@ public class MenuFrame extends JFrame implements ActionListener {
 
         JMenuBar mb = new JMenuBar();
 
+        String[] menu_text = {"File", "Esporta"};
         JMenu file = new JMenu(menu_text[0]);
         JMenu export = new JMenu(menu_text[1]);
 
@@ -56,22 +59,19 @@ public class MenuFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e){
-        String button = e.getActionCommand();
+        String action = e.getActionCommand();
 
-        if (button.equals(item_text[0])){
-            FileFrame ff = new FileFrame(button, FileFrame.SAVE, main_panel.getButtonPanel());
-            if(ff.operation(main_panel.getModel()))
+        if (action.equals(item_text[0]) || action.equals(item_text[3]) || action.equals(item_text[4]) || action.equals(item_text[5])){
+            FileFrame ff = new FileFrame(action, FileFrame.SAVE, main_panel.getButtonPanel());
+            if(ff.operation(main_panel.getTable()))
                 errorPane();
         }
-        if (button.equals(item_text[1])){
-            FileFrame ff = new FileFrame(button, FileFrame.LOAD, main_panel.getButtonPanel());
-            if(ff.operation(main_panel.getModel()))
+        if (action.equals(item_text[1])){
+            FileFrame ff = new FileFrame(action, FileFrame.LOAD, main_panel.getButtonPanel());
+            if(ff.operation(main_panel.getTable()))
                 errorPane();
         }
-        if (button.equals(item_text[2])){
-
-        }
-        if (button.equals(item_text[3]) || button.equals(item_text[4]) || button.equals(item_text[5])){
+        if (action.equals(item_text[2])){
 
         }
     }

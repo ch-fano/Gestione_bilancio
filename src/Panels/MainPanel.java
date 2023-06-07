@@ -9,7 +9,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
 public class MainPanel extends JPanel {
-    private final MyTableModel model;
+    private final JTable table;
     private final ButtonPanel bp;
     public MainPanel() {
         super();
@@ -17,8 +17,8 @@ public class MainPanel extends JPanel {
         setLayout(new BorderLayout());
 
 
-        model = new MyTableModel();
-        JTable table = new JTable(model);
+        MyTableModel model = new MyTableModel();
+        table = new JTable(model);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
@@ -39,8 +39,8 @@ public class MainPanel extends JPanel {
         add(bp, BorderLayout.SOUTH);
     }
 
-    public MyTableModel getModel() {
-        return model;
+    public JTable getTable() {
+        return table;
     }
     public ButtonPanel getButtonPanel(){ return bp; }
 }

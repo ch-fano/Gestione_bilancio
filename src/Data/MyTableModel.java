@@ -27,7 +27,6 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public void addRecord (Record el){
-
         v.add(el);
         fireTableDataChanged();
     }
@@ -69,8 +68,11 @@ public class MyTableModel extends AbstractTableModel {
         return col_name[col];
     }
 
-    @Override
+   @Override
     public Class getColumnClass(int col){
+        if(getRowCount()==0)
+            return Object.class;
+
         return getValueAt(0, col).getClass();
     }
 

@@ -1,7 +1,10 @@
 package Data;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  * Questa classe gestisce i dati relativi ad una singola voce del bilancio
@@ -23,6 +26,10 @@ public class Record implements Serializable {
         this.date = date;
         this.description = description;
         this.amount = amount;
+    }
+
+    public Record() {
+        this(null, "", 0);
     }
 
     /**
@@ -71,5 +78,35 @@ public class Record implements Serializable {
      */
     public void setAmount(float amount) {
         this.amount = amount;
+    }
+
+    public String print(String delimiter){
+        return date+delimiter+description+delimiter+amount;
+    }
+    public boolean setRecord(String formattedRecord, String delimiter){
+        int idx1 =formattedRecord.indexOf(delimiter);
+        if(idx1==-1)
+            return true;
+
+        try {
+            date = (new SimpleDateFormat("yyyy-MM-dd").parse(formattedRecord.substring(0, idx1))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }catch(ParseException e){
+            return true;
+        }
+
+        int idx2 = formattedRecord.substring(idx1+1).indexOf(delimiter);
+        if(idx2 ==-1)
+            return true;
+
+        idx2 = idx1+1+idx2;
+
+        description = formattedRecord.substring(idx1+1, idx2);
+        try{
+            amount = Float.parseFloat(formattedRecord.substring(idx2+1));
+        }catch(NumberFormatException e){
+            return true;
+        }
+
+        return false;
     }
 }
