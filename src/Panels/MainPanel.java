@@ -8,6 +8,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
+/**
+ * Classe che gestisce il layout del pannello principale inizializzando la tabella e gli altri pannelli del progetto
+ * @author Christofer Fanò
+ */
+
 public class MainPanel extends JPanel {
     private final JTable table;
     private final ButtonPanel bp;
@@ -39,8 +44,17 @@ public class MainPanel extends JPanel {
         add(bp, BorderLayout.SOUTH);
     }
 
+    /**
+     * Restituisce l'istanza della JTable del progetto
+     * @return JTable del progetto
+     */
     public JTable getTable() {
         return table;
     }
+
+    /**
+     * Restituisce l'istanza di ButtonPanel
+     * @return ButtonPanel del progetto
+     */
     public ButtonPanel getButtonPanel(){ return bp; }
 }

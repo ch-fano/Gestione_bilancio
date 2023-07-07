@@ -1,8 +1,6 @@
 package Export;
 
 import Data.MyTableModel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.simple.SimpleLogger;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -12,15 +10,29 @@ import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * Classe per l'esportazione e l'importazione del vettore delle voci in formato XLSX
+ * @author Christofer Fanò
+ */
 public class XLSX_IOFileFormatter extends IOFileFormatter{
 
     private final JTable table;
 
+    /**
+     * Costruttore che chiama il costruttore della classe padre e inizializza la JTable
+     * @param filepath percorso del file
+     * @param m modello contenente il vettore delle voci
+     * @param table tabella del progetto utilizzata per sapere il numero e il nome delle colonne
+     */
     public XLSX_IOFileFormatter(String filepath, MyTableModel m, JTable table) {
         super(filepath, m);
         this.table = table;
     }
 
+    /**
+     * Esportazione del vettore delle voci in formato excel
+     * @return true se si è verificato un errore, false altrimenti
+     */
     @Override
     public boolean exportFile()  {
 
@@ -60,6 +72,10 @@ public class XLSX_IOFileFormatter extends IOFileFormatter{
         return false;
     }
 
+    /**
+     * Importazione del vettore delle voci in formato excel
+     * @return true se si è verificato un errore, false altrimenti
+     */
     @Override
     public boolean importFile() {
         return false;

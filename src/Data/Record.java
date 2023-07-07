@@ -8,17 +8,16 @@ import java.time.ZoneId;
 
 /**
  * Questa classe gestisce i dati relativi ad una singola voce del bilancio
- * @autor Christofer Fanò
+ * @author Christofer Fanò
  */
 public class Record implements Serializable {
     private LocalDate date;
     private String description;
     private float amount;
 
-
     /**
      * Costruttore della classe Record
-     * @param date datq della transazione
+     * @param date data della transazione
      * @param description descrizione della transazione
      * @param amount importo della transazione
      */
@@ -28,6 +27,9 @@ public class Record implements Serializable {
         this.amount = amount;
     }
 
+    /**
+     * Costruttore che inizializza i campi con valori nulli
+     */
     public Record() {
         this(null, "", 0);
     }
@@ -41,27 +43,11 @@ public class Record implements Serializable {
     }
 
     /**
-     * Permette di assegnare all'attributo data il valore in input
-     * @param date data da assegnare alla voce
-     */
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    /**
      * Restituisce il valore dell'attributo descrizione
      * @return valore dell'attributo descrizione
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Permette di assegnare all'attributo descrizione il valore in input
-     * @param description descrizione da assegnare alla voce
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -73,16 +59,20 @@ public class Record implements Serializable {
     }
 
     /**
-     * Permette di assegnare all'attributo importo il valore in input
-     * @param amount importo da assegnare alla voce
+     * Stampa  campi del record separati dal delimitatore
+     * @param delimiter delimitatore da interporre tra i campi
+     * @return stringa contenente i campi separati da delimitatore
      */
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
     public String print(String delimiter){
         return date+delimiter+description+delimiter+amount;
     }
+
+    /**
+     * Metodo che estrae i campi da una stringa formattata e li setta
+     * @param formattedRecord stringa formattata
+     * @param delimiter delimitatore della stringa formattata
+     * @return true se si è verificato un errore, false altrimenti
+     */
     public boolean setRecord(String formattedRecord, String delimiter){
         int idx1 =formattedRecord.indexOf(delimiter);
         if(idx1==-1)

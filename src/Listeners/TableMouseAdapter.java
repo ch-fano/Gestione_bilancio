@@ -6,16 +6,29 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Classe che gestisce l'editing delle voci delle righe evidenziate quando cliccate con il tasto destro
+ * @author Christofer Fanò
+ */
 public class TableMouseAdapter extends MouseAdapter {
 
     private final JTable table;
     private final ButtonPanel bp;
 
+    /**
+     * Costruttore che memorizza la JTable e il ButtonPanel del progetto
+     * @param table JTable su cui lavorare sulle righe
+     * @param bp ButtonPanel da passare alla classe ModifyTableListener se necessario
+     */
     public TableMouseAdapter(JTable table, ButtonPanel bp) {
         this.table = table;
         this.bp = bp;
     }
 
+    /**
+     * Trova la riga su cui si è verificato il rilascio del mouse e genera un JPopupMenu sulla riga
+     * @param e evento che genera la chiamata al mouseRelesed
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         int r = table.rowAtPoint(e.getPoint());
@@ -36,6 +49,10 @@ public class TableMouseAdapter extends MouseAdapter {
         }
     }
 
+    /**
+     * Gestisce il click sul pulsante con le stesse azioni del rilascio, necessario per il funzionamento su MacOS
+     * @param e evento che genera la chiamata al mousePressed
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.isPopupTrigger()) {

@@ -19,19 +19,24 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Properties;
 
+/**
+ * Classe che permette il filtraggio delle voci della tabella in base al periodo e la ricerca con campo di testo
+ * @author Christofer Fanò
+ */
+
 public class FilterPanel extends JPanel {
     private final JComboBox<String> combo;
     private final JDatePickerImpl start_datePicker, end_datePicker;
     private final JButton search;
-    private final JTable table;
-    private final ButtonPanel bp;
     private final DateFilter filter = new DateFilter(null, null);
 
+    /**
+     * Costruttore che inizializza i calendari, campi di testo e bottoni per la ricerca e il filtraggio delle voci
+     * @param table JTable del progetto per settare il filtro e evidenziare le righe in base al testo
+     * @param bp ButtonPanel utilizzato per aggiornare il totale degli importi delle voci visualizzate
+     */
     public FilterPanel(JTable table, ButtonPanel bp) {
         super();
-
-        this.table = table;
-        this.bp = bp;
 
         setLayout(new BorderLayout());
 
@@ -55,7 +60,7 @@ public class FilterPanel extends JPanel {
         search = new JButton("Cerca");
         search.addActionListener(e -> {
             if(table.getModel().getRowCount()!=0) {
-                if (((String)combo.getSelectedItem()).equals("Tutti")) {
+                if (combo.getSelectedItem().equals("Tutti")) {
                     filter.setStartDate(null);
                     filter.setEndDate(null);
                 }
@@ -125,18 +130,34 @@ public class FilterPanel extends JPanel {
         add(filter_panel, BorderLayout.CENTER);
     }
 
+    /**
+     * Restituisce l'istanza della JComboBox per la selezione del tipo di filtraggio per data
+     * @return JComboBox per la selezione del periodo
+     */
     public JComboBox<String> getCombo() {
         return combo;
     }
 
+    /**
+     * Restituisce l'istanza di JDatePicker della data di inizio
+     * @return JDatePickerImpl per la selezione della data di inizio
+     */
     public JDatePickerImpl getStart_datePicker() {
         return start_datePicker;
     }
 
+    /**
+     * Restituisce l'istanza di JDatePicker della data di fine
+     * @return JDatePickerImpl per la selezione della data di fine
+     */
     public JDatePickerImpl getEnd_datePicker() {
         return end_datePicker;
     }
 
+    /**
+     * Restituisce l'istanza di JButton per il filtraggio per data
+     * @return JButton per iniziare il filtraggio per data
+     */
     public JButton getSearch() {
         return search;
     }

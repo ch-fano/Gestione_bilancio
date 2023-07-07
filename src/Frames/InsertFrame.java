@@ -20,15 +20,33 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * Classe che gestisce il frame per l'inserimento delle nuove voci
+ * @author Christofer Fanò
+ */
 public class InsertFrame extends JFrame implements DocumentListener {
     private final JTextField t_amount, t_desc;
     private final JButton ok = new JButton("Ok");
     private final JDatePickerImpl datePicker;
 
+    /**
+     * Costruttore utilizzato per il frame di inserimento che chiama il costruttore generico
+     * @param title titolo del frame da visualizzare
+     * @param model modello della tabella
+     * @param bp ButtonPanel del progetto
+     */
     public InsertFrame(String title, MyTableModel model, ButtonPanel bp){
         this(title, model, bp, -1);
     }
 
+    /**
+     * Costruttore che gestisce sia l'inserimento che la modifica delle voci di una riga, discriminando i due casi a
+     * seconda del parametro row
+     * @param title titolo del frame da visualizzare
+     * @param model modello della tabella da cui estrarre i valori della riga specificata
+     * @param bp ButtonPanel del progetto per ricalcolare il totale dell'ammontare delle righe visualizzate
+     * @param row ha valore -1 se si tratta di un inserimento oppure indica la riga ma modificare nella tabella
+     */
     public InsertFrame(String title, MyTableModel model, ButtonPanel bp, int row){
         super(title);
 
@@ -118,6 +136,9 @@ public class InsertFrame extends JFrame implements DocumentListener {
         setVisible(true);
     }
 
+    /**
+     * Metodo privato utilizzato per abilitare il bottone se i campi di inserimento contengono i valori corretti
+     */
     private void enableButton(){
         ok.setEnabled(true);
 
@@ -132,11 +153,19 @@ public class InsertFrame extends JFrame implements DocumentListener {
         }
     }
 
+    /**
+     * Chiama il metodo enableButton per verificare se il bottone può essere attivato
+     * @param e evento che ha generato la chiamata all'insertUpdate
+     */
     @Override
     public void insertUpdate(DocumentEvent e) {
         enableButton();
     }
 
+    /**
+     * Chiama il metodo enableButton per verificare se il bottone può essere attivato
+     * @param e evento che ha generato la chiamata al removeUpdate
+     */
     @Override
     public void removeUpdate(DocumentEvent e) {
         enableButton();

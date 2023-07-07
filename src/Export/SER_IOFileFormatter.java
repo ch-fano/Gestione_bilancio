@@ -6,12 +6,25 @@ import Data.Record;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Classe per l'esportazione e l'importazione del vettore delle voci in formato SER
+ * @author Christofer Fanò
+ */
 public class SER_IOFileFormatter extends IOFileFormatter{
 
+    /**
+     * Costruttore che chiama il costruttore della classe padre
+     * @param filepath percorso del file
+     * @param model modello contenente il vettore delle voci
+     */
     public SER_IOFileFormatter(String filepath, MyTableModel model) {
         super(filepath, model);
     }
 
+    /**
+     * Serializzazione del vettore delle voci nel file
+     * @return true se si è verificato un errore, false altrimenti
+     */
     @Override
     public boolean exportFile() {
         FileOutputStream f;
@@ -36,6 +49,10 @@ public class SER_IOFileFormatter extends IOFileFormatter{
         return false;
     }
 
+    /**
+     * Deserializzazione del vettore delle voci da file
+     * @return true se si è verificato un errore, false altrimenti
+     */
     @Override
     public boolean importFile() {
         FileInputStream f;

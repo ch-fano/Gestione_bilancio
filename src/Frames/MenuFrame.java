@@ -1,18 +1,22 @@
 package Frames;
 
-import Export.CSV_IOFileFormatter;
-import Export.IOFileFormatter;
-import Export.TXT_IOFileFormatter;
 import Panels.MainPanel;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe che gestisce la visualizzazione del menu e inizializza il MainPanel del progetto
+ * @author Christofer Fanò
+ */
 public class MenuFrame extends JFrame implements ActionListener {
     private final String[] item_text = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
     private final MainPanel main_panel = new MainPanel();
 
+    /**
+     * Costruttore che aggiunge al frame il menu e il MainPanel
+     * @param titolo
+     */
     public MenuFrame(String titolo) {
         super(titolo);
 
@@ -57,6 +61,10 @@ public class MenuFrame extends JFrame implements ActionListener {
         pack();
     }
 
+    /**
+     * Effettua il salvataggio, il caricamento e la stampa del bilancio a seconda della voce di menu selezionata
+     * @param e evento che ha generato la chiamata all'actionPerformed
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         String action = e.getActionCommand();
@@ -76,6 +84,9 @@ public class MenuFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Metodo privato per la visualizzazione di un pannello di errore
+     */
     private void errorPane(){
         JOptionPane.showMessageDialog(this,
                 "Operazione fallita",

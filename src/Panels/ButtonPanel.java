@@ -5,10 +5,19 @@ import Listeners.ModifyTableListener;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe che crea i bottoni di inserimento e cancellazione e calcola il totale degli importi delle voci della tabella
+ * @author Christofer Fanò
+ */
 public class ButtonPanel extends JPanel {
 
     private final JLabel total = new JLabel("Totale: 0€");
     private final JTable table;
+
+    /**
+     * Costruttore che inizializza i bottoni di inserimento e cancellazione
+     * @param table JTable del progetto da memorizzare per il conto del totale
+     */
     public ButtonPanel(JTable table) {
         super();
 
@@ -32,6 +41,9 @@ public class ButtonPanel extends JPanel {
         add(tot_panel, BorderLayout.CENTER);
     }
 
+    /**
+     * Metodo che conta il totale degli importi delle voci visibili nella tabella
+     */
     public void calculateTotal(){
         float tot = 0;
         for(int row=0; row < table.getRowCount(); row++)

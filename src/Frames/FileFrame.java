@@ -27,9 +27,9 @@ public class FileFrame {
     private JFileChooser chooser = null;
 
     /**
-     * Costruttore della classe FileFrame. Permette di scegliere un file tra le cartelle del proprio dispositivo
+     * Costruttore che permette di scegliere un file tra le cartelle del proprio dispositivo
      * @param title titolo visualizzato sul JFileChooser
-     * @param type differenzia una finestra di salavataggio da una di caricamento, mantenendo il codice comune
+     * @param type differenzia una finestra di salvataggio SAVE da una di caricamento LOAD, mantenendo il codice comune
      */
     public FileFrame(String title, int type, ButtonPanel bp) {
         if(type == SAVE || type == LOAD) {
