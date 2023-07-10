@@ -40,5 +40,6 @@
         <jarDirectory url="file://$MODULE_DIR$/src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/ooxml-lib" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="log4j-core-2.20.0" level="project" />
   </component>
 </module>

@@ -19,7 +19,7 @@ public class DateFormatter extends AbstractFormatter {
      * Restituisce la stringa convertita in oggetto
      * @param text stringa da convertire
      * @return stringa convertita in oggetto
-     * @throws ParseException
+     * @throws ParseException genera l'eccezione nel caso in cui non si riesca a convertire
      */
     @Override
     public Object stringToValue(String text) throws ParseException {

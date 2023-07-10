@@ -4,6 +4,8 @@ import Panels.MainPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Classe che gestisce la visualizzazione del menu e inizializza il MainPanel del progetto
@@ -15,10 +17,25 @@ public class MenuFrame extends JFrame implements ActionListener {
 
     /**
      * Costruttore che aggiunge al frame il menu e il MainPanel
-     * @param titolo
+     * @param titolo titolo da visulizzare nel frame
      */
     public MenuFrame(String titolo) {
         super(titolo);
+
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we)
+            {
+                int result = JOptionPane.showConfirmDialog(null,
+                        "Confermi di voler chiudere il programma?",
+                        "Conferma di chiusura",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION)
+                    System.exit(0);
+            }
+        });
 
         JMenuBar mb = new JMenuBar();
 
@@ -69,18 +86,39 @@ public class MenuFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e){
         String action = e.getActionCommand();
 
-        if (action.equals(item_text[0]) || action.equals(item_text[3]) || action.equals(item_text[4]) || action.equals(item_text[5])){
-            FileFrame ff = new FileFrame(action, FileFrame.SAVE, main_panel.getButtonPanel());
+        if (action.equals(item_text[0])){
+            FileFrame ff = new FileFrame(action, FileFrame.SAVE, main_panel.getButtonPanel(), FileFrame.SER);
             if(ff.operation(main_panel.getTable()))
                 errorPane();
         }
-        if (action.equals(item_text[1])){
-            FileFrame ff = new FileFrame(action, FileFrame.LOAD, main_panel.getButtonPanel());
-            if(ff.operation(main_panel.getTable()))
-                errorPane();
-        }
-        if (action.equals(item_text[2])){
 
+        if (action.equals(item_text[1])){
+            FileFrame ff = new FileFrame(action, FileFrame.LOAD, main_panel.getButtonPanel(), FileFrame.SER);
+            if(ff.operation(main_panel.getTable()))
+                errorPane();
+        }
+
+        if (action.equals(item_text[2])){
+            if(main_panel.printTable())
+                errorPane();
+        }
+
+        if (action.equals(item_text[3])){
+            FileFrame ff = new FileFrame(action, FileFrame.SAVE, main_panel.getButtonPanel(), FileFrame.CSV);
+            if(ff.operation(main_panel.getTable()))
+                errorPane();
+        }
+
+        if (action.equals(item_text[4])){
+            FileFrame ff = new FileFrame(action, FileFrame.SAVE, main_panel.getButtonPanel(), FileFrame.TXT);
+            if(ff.operation(main_panel.getTable()))
+                errorPane();
+        }
+
+        if (action.equals(item_text[5])){
+            FileFrame ff = new FileFrame(action, FileFrame.SAVE, main_panel.getButtonPanel(), FileFrame.XLSX);
+            if(ff.operation(main_panel.getTable()))
+                errorPane();
         }
     }
 

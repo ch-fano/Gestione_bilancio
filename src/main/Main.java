@@ -1,6 +1,5 @@
 package main;
 
-import javax.swing.*;
 import Frames.MenuFrame;
 
 /**
@@ -9,16 +8,10 @@ import Frames.MenuFrame;
  */
 public class Main {
     public static void main(String[] args) {
-        new Main();
+        MenuFrame f = new MenuFrame("Gestione bilancio");
+
+        f.pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }
-
-    public Main() {
-            MenuFrame f = new MenuFrame("Gestione bilancio");
-
-
-            f.pack();
-            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            f.setLocationRelativeTo(null);
-            f.setVisible(true);
-        }
-    }
+}

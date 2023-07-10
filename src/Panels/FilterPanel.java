@@ -17,6 +17,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -60,7 +61,7 @@ public class FilterPanel extends JPanel {
         search = new JButton("Cerca");
         search.addActionListener(e -> {
             if(table.getModel().getRowCount()!=0) {
-                if (combo.getSelectedItem().equals("Tutti")) {
+                if (Objects.requireNonNull(combo.getSelectedItem()).equals("Tutti")) {
                     filter.setStartDate(null);
                     filter.setEndDate(null);
                 }

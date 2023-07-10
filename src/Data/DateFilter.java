@@ -50,12 +50,12 @@ public class DateFilter extends RowFilter<Object, Object> {
         if(startDate == null || endDate == null)
             return true;
 
-        //LocalDate current=(LocalDate)entry.getValue(0);
-        LocalDate current = null;
+        LocalDate current;
         try {
             current = (new SimpleDateFormat("dd-MM-yyyy").parse((String) entry.getValue(0))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }catch(ParseException e){
             System.err.println("InsertFrame: errore nella conversione da String a Date");
+            return false;
         }
         return current.isAfter(startDate.minusDays(1)) && current.isBefore(endDate.plusDays(1));
     }

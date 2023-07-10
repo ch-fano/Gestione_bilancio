@@ -57,4 +57,18 @@ public class MainPanel extends JPanel {
      * @return ButtonPanel del progetto
      */
     public ButtonPanel getButtonPanel(){ return bp; }
+
+    /**
+     * Metodo che gestisce la stampa della tabella
+     * @return true se si è verificato un errore, false altrimenti
+     */
+    public boolean printTable(){
+        try {
+            table.print(JTable.PrintMode.FIT_WIDTH, null, null);
+        } catch (java.awt.print.PrinterException e) {
+           return true;
+        }
+
+        return false;
+    }
 }
