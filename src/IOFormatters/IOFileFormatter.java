@@ -1,4 +1,4 @@
-package Export;
+package IOFormatters;
 
 import Data.MyTableModel;
 

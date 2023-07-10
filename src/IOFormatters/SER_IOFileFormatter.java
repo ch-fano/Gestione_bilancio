@@ -1,4 +1,4 @@
-package Export;
+package IOFormatters;
 
 import Data.MyTableModel;
 import Data.Record;
@@ -7,27 +7,28 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Classe per l'esportazione e l'importazione del vettore delle voci in formato CSV
+ * Classe per l'esportazione e l'importazione del vettore delle voci in formato SER
  * @author Christofer Fanò
  */
-public class CSV_IOFileFormatter extends IOFileFormatter {
+public class SER_IOFileFormatter extends IOFileFormatter{
+
     /**
      * Costruttore che chiama il costruttore della classe padre
      * @param filepath percorso del file
      * @param model modello contenente il vettore delle voci
      */
-    public CSV_IOFileFormatter(String filepath, MyTableModel model) {
+    public SER_IOFileFormatter(String filepath, MyTableModel model) {
         super(filepath, model);
     }
 
     /**
-     * Esportazione del vettore delle voci nel file, con i campi separati da una virgola
+     * Serializzazione del vettore delle voci nel file
      * @return true se si è verificato un errore, false altrimenti
      */
     @Override
     public boolean exportFile() {
-        ArrayList<Record> v = model.getV();
         FileOutputStream f;
+        ArrayList<Record> v = model.getV();
 
         try {
             f = new FileOutputStream(filepath);
@@ -35,52 +36,44 @@ public class CSV_IOFileFormatter extends IOFileFormatter {
             return true;
         }
 
-        DataOutputStream os = new DataOutputStream(f);
-
+        ObjectOutputStream os;
         try {
-            for (Record r : v)
-                os.write((r.print(",")+"\n").getBytes());
-
+            os = new ObjectOutputStream(f);
+            os.writeObject(v);
+            os.flush();
             os.close();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             return true;
         }
 
         return false;
     }
+
     /**
-     * Importazione del vettore delle voci nel file, con i campi separati da una virgola
+     * Deserializzazione del vettore delle voci da file
      * @return true se si è verificato un errore, false altrimenti
      */
     @Override
     public boolean importFile() {
         FileInputStream f;
-        ArrayList<Record> v = new ArrayList<>();
+        ObjectInputStream is;
 
         try {
             f = new FileInputStream(filepath);
+            is = new ObjectInputStream(f);
         } catch (IOException e) {
             return true;
         }
 
-        BufferedReader is = new BufferedReader(new InputStreamReader(f));
         try {
-            String line;
-
-            while((line = is.readLine())!=null) {
-                 Record r = new Record();
-                 if(r.setRecord(line, ","))
-                     return true;
-                 v.add(r);
-            }
+            model.setV((ArrayList<Record>) (is.readObject()));
             is.close();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             return true;
         }
-
-        model.setV(v);
 
         return false;
     }
+
+
 }

@@ -1,7 +1,7 @@
 package Frames;
 
 import Data.MyTableModel;
-import Export.*;
+import IOFormatters.*;
 import Panels.ButtonPanel;
 
 import javax.swing.*;

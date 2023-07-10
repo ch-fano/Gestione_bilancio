@@ -1,4 +1,4 @@
-package Export;
+package IOFormatters;
 
 import Data.MyTableModel;
 import Data.Record;
@@ -7,21 +7,21 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Classe per l'esportazione e l'importazione del vettore delle voci in formato TXT
+ * Classe per l'esportazione e l'importazione del vettore delle voci in formato CSV
  * @author Christofer Fanò
  */
-public class TXT_IOFileFormatter extends IOFileFormatter {
+public class CSV_IOFileFormatter extends IOFileFormatter {
     /**
      * Costruttore che chiama il costruttore della classe padre
      * @param filepath percorso del file
      * @param model modello contenente il vettore delle voci
      */
-    public TXT_IOFileFormatter(String filepath, MyTableModel model) {
+    public CSV_IOFileFormatter(String filepath, MyTableModel model) {
         super(filepath, model);
     }
 
     /**
-     * Esportazione del vettore delle voci nel file, con i campi separati da una tabulazione
+     * Esportazione del vettore delle voci nel file, con i campi separati da una virgola
      * @return true se si è verificato un errore, false altrimenti
      */
     @Override
@@ -39,7 +39,7 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
 
         try {
             for (Record r : v)
-                os.write((r.print("\t")+"\n").getBytes());
+                os.write((r.print(",")+"\n").getBytes());
 
             os.close();
         }
@@ -49,9 +49,8 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
 
         return false;
     }
-
     /**
-     * Importazione del vettore delle voci da file, con i campi separati da una tabulazione
+     * Importazione del vettore delle voci nel file, con i campi separati da una virgola
      * @return true se si è verificato un errore, false altrimenti
      */
     @Override
@@ -70,10 +69,10 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
             String line;
 
             while((line = is.readLine())!=null) {
-                Record r = new Record();
-                if(r.setRecord(line, "\t"))
-                    return true;
-                v.add(r);
+                 Record r = new Record();
+                 if(r.setRecord(line, ","))
+                     return true;
+                 v.add(r);
             }
             is.close();
         } catch (IOException e) {

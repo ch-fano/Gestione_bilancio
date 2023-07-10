@@ -1,4 +1,4 @@
-package Export;
+package IOFormatters;
 
 import Data.MyTableModel;
 import Data.Record;
@@ -7,28 +7,27 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Classe per l'esportazione e l'importazione del vettore delle voci in formato SER
+ * Classe per l'esportazione e l'importazione del vettore delle voci in formato TXT
  * @author Christofer Fanò
  */
-public class SER_IOFileFormatter extends IOFileFormatter{
-
+public class TXT_IOFileFormatter extends IOFileFormatter {
     /**
      * Costruttore che chiama il costruttore della classe padre
      * @param filepath percorso del file
      * @param model modello contenente il vettore delle voci
      */
-    public SER_IOFileFormatter(String filepath, MyTableModel model) {
+    public TXT_IOFileFormatter(String filepath, MyTableModel model) {
         super(filepath, model);
     }
 
     /**
-     * Serializzazione del vettore delle voci nel file
+     * Esportazione del vettore delle voci nel file, con i campi separati da una tabulazione
      * @return true se si è verificato un errore, false altrimenti
      */
     @Override
     public boolean exportFile() {
-        FileOutputStream f;
         ArrayList<Record> v = model.getV();
+        FileOutputStream f;
 
         try {
             f = new FileOutputStream(filepath);
@@ -36,13 +35,15 @@ public class SER_IOFileFormatter extends IOFileFormatter{
             return true;
         }
 
-        ObjectOutputStream os;
+        DataOutputStream os = new DataOutputStream(f);
+
         try {
-            os = new ObjectOutputStream(f);
-            os.writeObject(v);
-            os.flush();
+            for (Record r : v)
+                os.write((r.print("\t")+"\n").getBytes());
+
             os.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e){
             return true;
         }
 
@@ -50,30 +51,37 @@ public class SER_IOFileFormatter extends IOFileFormatter{
     }
 
     /**
-     * Deserializzazione del vettore delle voci da file
+     * Importazione del vettore delle voci da file, con i campi separati da una tabulazione
      * @return true se si è verificato un errore, false altrimenti
      */
     @Override
     public boolean importFile() {
         FileInputStream f;
-        ObjectInputStream is;
+        ArrayList<Record> v = new ArrayList<>();
 
         try {
             f = new FileInputStream(filepath);
-            is = new ObjectInputStream(f);
         } catch (IOException e) {
             return true;
         }
 
+        BufferedReader is = new BufferedReader(new InputStreamReader(f));
         try {
-            model.setV((ArrayList<Record>) (is.readObject()));
+            String line;
+
+            while((line = is.readLine())!=null) {
+                Record r = new Record();
+                if(r.setRecord(line, "\t"))
+                    return true;
+                v.add(r);
+            }
             is.close();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             return true;
         }
 
+        model.setV(v);
+
         return false;
     }
-
-
 }
