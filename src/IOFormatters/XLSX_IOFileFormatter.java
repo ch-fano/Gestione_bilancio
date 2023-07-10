@@ -77,6 +77,7 @@ public class XLSX_IOFileFormatter extends IOFileFormatter{
             wb.close();
         }catch(IOException e)
         {
+            e.printStackTrace();
             return true;
         }
 
@@ -103,6 +104,7 @@ public class XLSX_IOFileFormatter extends IOFileFormatter{
             try {
                 rowIterator.next();
             } catch (NoSuchElementException e){
+                e.printStackTrace();
                 return true;
             }
 
@@ -126,6 +128,7 @@ public class XLSX_IOFileFormatter extends IOFileFormatter{
                             case 2 -> amount = Float.parseFloat(value);
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                         return true;
                     }
 
@@ -142,6 +145,7 @@ public class XLSX_IOFileFormatter extends IOFileFormatter{
                 wb.close();
                 file.close();
             }catch(IOException e){
+                e.printStackTrace();
                 return true;
             }
 
@@ -149,6 +153,7 @@ public class XLSX_IOFileFormatter extends IOFileFormatter{
         }
         catch (Exception e)
         {
+            e.printStackTrace();
            return true;
         }
     }

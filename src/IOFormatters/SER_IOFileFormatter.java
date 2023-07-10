@@ -33,6 +33,7 @@ public class SER_IOFileFormatter extends IOFileFormatter{
         try {
             f = new FileOutputStream(filepath);
         }catch(FileNotFoundException e){
+            e.printStackTrace();
             return true;
         }
 
@@ -43,6 +44,7 @@ public class SER_IOFileFormatter extends IOFileFormatter{
             os.flush();
             os.close();
         } catch (IOException e) {
+            e.printStackTrace();
             return true;
         }
 
@@ -62,6 +64,7 @@ public class SER_IOFileFormatter extends IOFileFormatter{
             f = new FileInputStream(filepath);
             is = new ObjectInputStream(f);
         } catch (IOException e) {
+            e.printStackTrace();
             return true;
         }
 
@@ -69,6 +72,7 @@ public class SER_IOFileFormatter extends IOFileFormatter{
             model.setV((ArrayList<Record>) (is.readObject()));
             is.close();
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             return true;
         }
 

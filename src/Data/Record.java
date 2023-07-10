@@ -81,6 +81,7 @@ public class Record implements Serializable {
         try {
             date = (new SimpleDateFormat("yyyy-MM-dd").parse(formattedRecord.substring(0, idx1))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }catch(ParseException e){
+            e.printStackTrace();
             return true;
         }
 
@@ -94,6 +95,7 @@ public class Record implements Serializable {
         try{
             amount = Float.parseFloat(formattedRecord.substring(idx2+1));
         }catch(NumberFormatException e){
+            e.printStackTrace();
             return true;
         }
 

@@ -66,7 +66,7 @@ public class InsertFrame extends JFrame implements DocumentListener {
             try {
                 dateModel.setValue(new SimpleDateFormat("dd-MM-yyyy").parse((String) model.getValueAt(row, 0)));
             }catch(ParseException e){
-                System.err.println("InsertFrame: errore nella conversione da String a Date");
+                e.printStackTrace();
             }
 
             t_desc.setText((String) model.getValueAt(row,1));
@@ -141,6 +141,10 @@ public class InsertFrame extends JFrame implements DocumentListener {
      */
     private void enableButton(){
         ok.setEnabled(true);
+
+        /* Controllo opzionale: la data inserita non deve essere dopo la giornata di oggi
+        if(((Date) datePicker.getModel().getValue()).after(java.sql.Date.valueOf(LocalDate.now())))
+            ok.setEnabled(false);*/
 
         if(t_desc.getText().equals("") || t_amount.getText().equals(""))
             ok.setEnabled(false);

@@ -54,7 +54,7 @@ public class DateFilter extends RowFilter<Object, Object> {
         try {
             current = (new SimpleDateFormat("dd-MM-yyyy").parse((String) entry.getValue(0))).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }catch(ParseException e){
-            System.err.println("InsertFrame: errore nella conversione da String a Date");
+            e.printStackTrace();
             return false;
         }
         return current.isAfter(startDate.minusDays(1)) && current.isBefore(endDate.plusDays(1));

@@ -32,6 +32,7 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
         try {
             f = new FileOutputStream(filepath);
         }catch(FileNotFoundException e){
+            e.printStackTrace();
             return true;
         }
 
@@ -44,6 +45,7 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
             os.close();
         }
         catch (IOException e){
+            e.printStackTrace();
             return true;
         }
 
@@ -62,6 +64,7 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
         try {
             f = new FileInputStream(filepath);
         } catch (IOException e) {
+            e.printStackTrace();
             return true;
         }
 
@@ -77,6 +80,7 @@ public class TXT_IOFileFormatter extends IOFileFormatter {
             }
             is.close();
         } catch (IOException e) {
+            e.printStackTrace();
             return true;
         }
 

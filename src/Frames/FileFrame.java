@@ -65,7 +65,7 @@ public class FileFrame {
                 };
 
                 chooser.setDialogTitle(title);
-                chooser.setCurrentDirectory(new File("./src/Download_balance"));
+                chooser.setCurrentDirectory(new File("./Download_balance"));
 
                 chooser.addChoosableFileFilter(new FileNameExtensionFilter(file_desc[extension], file_ext[extension]));
                 for (int i = 0; i < 4; i++){
