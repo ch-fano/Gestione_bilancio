@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Classe con i metodi della tabella del bilancio
  * @author Christofer Fanò
  */
-
+@SuppressWarnings("serial")
 public class MyTableModel extends AbstractTableModel {
     private ArrayList<Record> v;
     private final String [] col_name = {"Data", "Descrizione", "Importo"};
@@ -21,7 +21,7 @@ public class MyTableModel extends AbstractTableModel {
     public MyTableModel(ArrayList <Record> v) { this.v = v; }
 
     /**
-     * Costruttore che inizilizza il vettore delle voci di bilancio ad un vettore vuoto
+     * Costruttore che inizializza il vettore delle voci di bilancio a un vettore vuoto
      */
     public MyTableModel(){ v = new ArrayList<>(); }
 
@@ -61,7 +61,7 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     /**
-     * Meotodo che sostituisce un elemento del vettore delle voci con quello passato e aggiorna la tabella
+     * Metodo che sostituisce un elemento del vettore delle voci con quello passato e aggiorna la tabella
      * @param index indice dell'elemento da sostituire
      * @param el nuovo elemento da inserire nella posizione del precedente
      */
@@ -122,7 +122,7 @@ public class MyTableModel extends AbstractTableModel {
      * @return classe degli elementi della colonna indicata
      */
    @Override
-    public Class getColumnClass(int col){
+    public Class<?> getColumnClass(int col){
         if(getRowCount()==0)
             return Object.class;
 

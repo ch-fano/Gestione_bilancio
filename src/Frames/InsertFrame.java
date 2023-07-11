@@ -24,6 +24,7 @@ import java.util.Properties;
  * Classe che gestisce il frame per l'inserimento delle nuove voci
  * @author Christofer Fanò
  */
+@SuppressWarnings("serial")
 public class InsertFrame extends JFrame implements DocumentListener {
     private final JTextField t_amount, t_desc;
     private final JButton ok = new JButton("Ok");

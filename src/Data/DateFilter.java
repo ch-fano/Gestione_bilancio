@@ -46,7 +46,7 @@ public class DateFilter extends RowFilter<Object, Object> {
      * @return true se la data è da visualizzare, false altrimenti
      */
     @Override
-    public boolean include(Entry entry) {
+    public boolean include(Entry<?,?> entry) {
         if(startDate == null || endDate == null)
             return true;
 

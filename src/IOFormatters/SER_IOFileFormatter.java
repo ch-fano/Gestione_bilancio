@@ -55,6 +55,7 @@ public class SER_IOFileFormatter extends IOFileFormatter{
      * Deserializzazione del vettore delle voci da file
      * @return true se si è verificato un errore, false altrimenti
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean importFile() {
         FileInputStream f;

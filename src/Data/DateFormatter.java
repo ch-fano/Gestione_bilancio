@@ -7,9 +7,10 @@ import java.util.Calendar;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
 /**
- * Classe che formatta la visualizzazzione delle date
+ * Classe che formatta la visualizzazione delle date
  * @author Christofer Fanò
  */
+@SuppressWarnings("serial")
 public class DateFormatter extends AbstractFormatter {
 
     private final String datePattern = "dd-MM-yyyy";

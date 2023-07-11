@@ -11,13 +11,14 @@ import java.awt.event.WindowEvent;
  * Classe che gestisce la visualizzazione del menu e inizializza il MainPanel del progetto
  * @author Christofer Fanò
  */
+@SuppressWarnings("serial")
 public class MenuFrame extends JFrame implements ActionListener {
     private final String[] item_text = {"Salva bilancio", "Carica bilancio", "Stampa bilancio", "Formato CSV", "Formato testo", "Formato Excel"};
     private final MainPanel main_panel = new MainPanel();
 
     /**
      * Costruttore che aggiunge al frame il menu e il MainPanel
-     * @param titolo titolo da visulizzare nel frame
+     * @param titolo titolo da visualizzare nel frame
      */
     public MenuFrame(String titolo) {
         super(titolo);

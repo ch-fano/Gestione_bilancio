@@ -12,7 +12,7 @@ import java.awt.*;
  * Classe che gestisce il layout del pannello principale inizializzando la tabella e gli altri pannelli del progetto
  * @author Christofer Fanò
  */
-
+@SuppressWarnings("serial")
 public class MainPanel extends JPanel {
     private final JTable table;
     private final ButtonPanel bp;

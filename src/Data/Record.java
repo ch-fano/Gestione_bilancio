@@ -1,5 +1,6 @@
 package Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,10 +8,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 /**
- * Questa classe gestisce i dati relativi ad una singola voce del bilancio
+ * Questa classe gestisce i dati relativi a una singola voce del bilancio
  * @author Christofer Fanò
  */
 public class Record implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private LocalDate date;
     private String description;
     private float amount;
@@ -59,7 +62,7 @@ public class Record implements Serializable {
     }
 
     /**
-     * Stampa  campi del record separati dal delimitatore
+     * Stampa campi del record separati dal delimitatore
      * @param delimiter delimitatore da interporre tra i campi
      * @return stringa contenente i campi separati da delimitatore
      */

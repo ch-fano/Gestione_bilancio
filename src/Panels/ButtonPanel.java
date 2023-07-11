@@ -10,6 +10,7 @@ import java.awt.*;
  * Classe che crea i bottoni di inserimento e cancellazione e calcola il totale degli importi delle voci della tabella
  * @author Christofer Fanò
  */
+@SuppressWarnings("serial")
 public class ButtonPanel extends JPanel {
 
     private final JLabel total = new JLabel("Totale: 0€");

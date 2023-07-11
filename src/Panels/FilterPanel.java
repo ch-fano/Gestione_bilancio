@@ -24,7 +24,7 @@ import java.util.Properties;
  * Classe che permette il filtraggio delle voci della tabella in base al periodo e la ricerca con campo di testo
  * @author Christofer Fanò
  */
-
+@SuppressWarnings("serial")
 public class FilterPanel extends JPanel {
     private final JComboBox<String> combo;
     private final JDatePickerImpl start_datePicker, end_datePicker;
@@ -33,9 +33,10 @@ public class FilterPanel extends JPanel {
 
     /**
      * Costruttore che inizializza i calendari, campi di testo e bottoni per la ricerca e il filtraggio delle voci
-     * @param table JTable del progetto per settare il filtro e evidenziare le righe in base al testo
+     * @param table JTable del progetto per settare il filtro ed evidenziare le righe in base al testo
      * @param bp ButtonPanel utilizzato per aggiornare il totale degli importi delle voci visualizzate
      */
+    @SuppressWarnings("unchecked")
     public FilterPanel(JTable table, ButtonPanel bp) {
         super();
 
