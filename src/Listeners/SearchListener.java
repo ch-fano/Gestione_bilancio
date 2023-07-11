@@ -42,7 +42,7 @@ public class SearchListener implements ActionListener {
         }
 
         if(name.equals(">")){
-            //se row=-1 parto da 0 altrimenti dalla riga succesiva
+            //se row=-1 parto da 0 altrimenti dalla riga successiva
             for(row++; row < table.getRowCount() && flag; row++) {
                 String desc = (String) table.getModel().getValueAt(table.convertRowIndexToModel(row), 1);
 

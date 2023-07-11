@@ -3,7 +3,7 @@ package IOFormatters;
 import Data.MyTableModel;
 
 /**
- * Classe astratta da cui ereditano tutte le classi per l'importazione e esportazione del progetto
+ * Classe astratta da cui ereditano tutte le classi per l'importazione ed esportazione del progetto
  * @author Christofer Fanò
  */
 public abstract class IOFileFormatter {
