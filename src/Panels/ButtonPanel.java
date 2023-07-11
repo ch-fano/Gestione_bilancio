@@ -5,6 +5,7 @@ import Listeners.ModifyTableListener;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
  * Classe che crea i bottoni di inserimento e cancellazione e calcola il totale degli importi delle voci della tabella
  * @author Christofer Fanò
@@ -24,8 +25,8 @@ public class ButtonPanel extends JPanel {
         this.table = table;
         setLayout(new BorderLayout());
 
-        JButton b_add = new JButton("Add");
-        JButton b_del = new JButton("Delete");
+        JButton b_add = new JButton("Inserisci");
+        JButton b_del = new JButton("Elimina");
 
         b_add.addActionListener(new ModifyTableListener(table, this));
         b_del.addActionListener(new ModifyTableListener(table, this));

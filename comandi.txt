@@ -1,4 +1,3 @@
-javac -Xlint -proc:none -cp "./src/Libraries\log4j-core-2.20.0.jar;./src/Libraries/jdatepicker-1.3.4.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-5.2.3.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-5.2.3.jar" -sourcepath .\src -d . src\MainPackage\Main.java
+javac -Xlint -proc:none -cp "./src/Libraries\log4j-core-2.20.0.jar;./src/Libraries/jdatepicker-1.3.4.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-5.2.3.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-5.2.3.jar" -sourcepath .\src -d . src\Main.java
 
-
-java -cp "./src/Libraries/log4j-core-2.20.0.jar;./src/Libraries/jdatepicker-1.3.4.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-5.2.3.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-5.2.3.jar" Main  
+java -cp "./src/Libraries/log4j-core-2.20.0.jar;./src/Libraries/jdatepicker-1.3.4.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-5.2.3.jar;./src/Libraries/poi-bin-5.2.3-20220909/poi-bin-5.2.3/poi-ooxml-5.2.3.jar;." Main

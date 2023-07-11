@@ -41,7 +41,7 @@ public class TableMouseAdapter extends MouseAdapter {
         int rowindex = table.convertRowIndexToModel(table.getSelectedRow());
         if (rowindex >= 0 && e.isPopupTrigger() && e.getComponent() instanceof JTable) {
             JPopupMenu popup = new JPopupMenu();
-            JMenuItem edit = new JMenuItem("Edit");
+            JMenuItem edit = new JMenuItem("Modifica");
 
             edit.addActionListener(new ModifyTableListener(table, bp));
             popup.add(edit);

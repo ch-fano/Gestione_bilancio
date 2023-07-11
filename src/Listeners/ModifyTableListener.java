@@ -41,12 +41,12 @@ public class ModifyTableListener implements ActionListener {
             row = table.convertRowIndexToModel(row);
 
 
-        if(name.equals("Add")) {
+        if(name.equals("Inserisci")) {
             f = new InsertFrame("Inserisci voce", model, bp);
             f.setLocationRelativeTo(null);
         }
         else {
-            if (name.equals("Delete")) {
+            if (name.equals("Elimina")) {
                 if (row != -1) {
                     model.deleteRecord(row);
                     bp.calculateTotal();
